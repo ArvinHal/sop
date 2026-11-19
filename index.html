@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOP 梳理 · 交付物：上镜调试执行</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; background: #f5f6f8; color: #1f2329; line-height: 1.6; }
+  .wrap { max-width: 1400px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  h2 { font-size: 18px; margin: 34px 0 14px; padding-left: 10px; border-left: 4px solid #3370ff; }
+  p { margin: 6px 0; }
+  .sub { color: #646a73; font-size: 14px; margin-bottom: 24px; }
+  .notice { background: #eef4ff; border: 1px solid #adc6ff; border-radius: 6px; padding: 14px 18px; font-size: 14px; margin-bottom: 8px; }
+  .notice b { color: #1d39c4; }
+  .notice ol { margin: 10px 0 2px; padding-left: 22px; }
+  .notice li { margin: 4px 0; }
+  .card { background: #fff; border: 1px solid #e5e6eb; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  .flow-wrap { overflow-x: auto; }
+  svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid #dee0e3; padding: 9px 10px; text-align: left; vertical-align: top; }
+  th { background: #f2f3f5; font-weight: 600; white-space: nowrap; }
+  tr:nth-child(even) td { background: #fafbfc; }
+  .num { text-align: center; white-space: nowrap; }
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: 7px 0 7px 26px; position: relative; border-bottom: 1px dashed #e5e6eb; font-size: 14px; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: "□"; position: absolute; left: 4px; color: #8f959e; font-weight: bold; }
+  .hint { font-size: 12px; color: #646a73; margin-top: 10px; }
+  .foot { margin-top: 28px; color: #8f959e; font-size: 12px; text-align: center; }
+  .empty { color: #b7bcc4; font-style: italic; }
+  .prio-line { display:flex; align-items:center; gap:10px; background:#fff; border:1px solid #e5e6eb; border-radius:6px; padding:12px 16px; margin-bottom:16px; font-size:14px; }
+  .prio-line .lbl { color:#646a73; }
+  .prio-tag { display:inline-block; padding:2px 12px; border-radius:12px; font-weight:700; font-size:13px; }
+  .prio-p1 { background:#fff7e6; color:#d46b08; border:1px solid #ffd591; }
+  .prio-line .note { color:#8f959e; font-size:12px; margin-left:auto; }
+  .scope { background:#f6ffed; border:1px solid #b7eb8f; border-radius:6px; padding:12px 16px; margin-bottom:16px; font-size:14px; }
+  .scope b { color:#237804; }
+  .scope ul { margin:8px 0 2px; padding-left:22px; }
+  .scope li { margin:3px 0; }
+  .neg { color:#cf1322; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>SOP 梳理 · 交付物：上镜调试执行</h1>
+  <p class="sub">调试部　|　对应任务：R-SOP　|　SOP 编号：待定　|　用途：各部门照此格式交付本部门 SOP 梳理成果。</p>
+
+  <div class="scope" style="background:#eef4ff;border-color:#adc6ff">
+    <b style="color:#1d39c4">本文档只讲一条 SOP。一个部门有多条，先在飞书《部门SOP清单》登记范围，再逐条按此模板交付。</b>
+    <ul>
+      <li>清单登记每条 SOP 的编号、名称、所属部门、起点、终点、优先级、负责人、状态；</li>
+      <li>本文档对应清单中的 <b>1 条</b>「上镜调试执行」，边界和优先级从清单带入，不要在单条文档里另定；</li>
+      <li>这条 SOP 主线 <b>7 个节点</b>（调试排班 → 公布排班信息 → 新主播报备登记 → 调试方案沟通 → 预约调试 → 调试 → 调试登记），节点不是独立 SOP，不要拆成 7 条登记；</li>
+      <li>一个部门交完清单里全部 SOP，且每条都通过下方验收清单，R-SOP 任务才算完成。<b>本部门其余 SOP 尚未登记，未在本文件范围内。</b></li>
+    </ul>
+  </div>
+
+  <div class="prio-line">
+    <span class="lbl">这条 SOP 的优先级：</span>
+    <span class="prio-tag prio-p1">P1 · 与台账 R-SOP 一致</span>
+    <span class="note">SOP 是整条建设链的输入，优先级取自任务台账 R-SOP 的「优先级」字段</span>
+  </div>
+
+  <div class="scope">
+    <b>动笔前先定边界：什么算"一条 SOP"</b>
+    <ul>
+      <li>一条 SOP = 一个可以完整交给一个人跑完的端到端任务，有明确起点和终点；</li>
+      <li>本条边界：起点 = 调试师与调试部客服沟通安排好排班时间、做好排班信息表，终点 = 调试师调试后完成调试登记；</li>
+      <li>本条跨越「调试部客服 → 运营 → 调试师 → 数据部」四个岗位，主线 7 步，含 2 处回流（S5、S6 均回到 S4）；</li>
+      <li>不包含主播直播话术培训，属另一条 SOP。</li>
+    </ul>
+  </div>
+
+  <div class="notice">
+    <b>要交付的东西，一共 4 项：</b>
+    <ol>
+      <li>画出这条 SOP 的流程图（从起点到终点，含分支和回流，无变更路径也要画到终点）；</li>
+      <li>标出每个流程节点的角色（谁负责、谁配合）；</li>
+      <li>写清每个流程节点做什么工作、产出什么、由谁维护；</li>
+      <li>写清现状如何衔接——<b>实际上什么情况下会进入下一步，以及卡壳时现在是怎么发生的</b>（只记观察，不定规则）。</li>
+    </ol>
+    另外先界定这条 SOP 的边界（起点/终点）和优先级。<b>只还原现状，不写规则</b>——"系统以后该怎么处理"是「部门内流程梳理」的事，这里只提供事实底稿。
+  </div>
+
+  <div class="scope" style="background:#fffbe6;border-color:#ffe58f">
+    <b style="color:#ad4e00">边界辨析：和「部门内流程梳理」怎么分？</b>
+    <p style="font-size:13px;margin:8px 0"><b>切分维度是"现状 vs 目标"，不是"正常 vs 异常"。</b>两侧都同时包含正常和异常，只是写法不同：</p>
+    <table style="font-size:12px">
+      <thead><tr><th></th><th>正常流程</th><th>异常流程</th></tr></thead>
+      <tbody>
+        <tr><td><b>SOP 梳理（现状）</b></td><td>排班 → 公布 → 新主播报备 → 方案沟通 → 预约（客服审核）→ 调试 → 调试登记</td><td>运营不沟通、运营约错调试（回 S4 重排）、调试效果不满意（回 S4 重沟通）、主播编号填错或漏登记</td></tr>
+        <tr><td><b>部门内流程梳理（目标）</b></td><td>系统正常怎么走：R1–R8 规则</td><td>系统异常怎么处理：E1–E4 兜底规则</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#8f959e;margin:8px 0 0"><b>常见误解：</b>"SOP 写正常、FLOW 写异常"——错。这样 SOP 不记异常事实，FLOW 写异常规则就没有依据，只能拍脑袋；FLOW 不写正常规则，系统正常路径就没人定义。<b>正确记法：SOP = 现在实际怎么走（好坏都记，只记事实）；FLOW = 以后系统怎么走（正常异常都定，只定规则）。</b></p>
+  </div>
+
+  <h2>一、流程图（7 个节点，含 2 处回流）</h2>
+  <div class="card flow-wrap">
+    <svg viewBox="0 0 1000 1508" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L0,6 L9,3 z" fill="#4e5969"/>
+        </marker>
+        <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L0,6 L9,3 z" fill="#d4380d"/>
+        </marker>
+      </defs>
+
+  <g>
+    <rect x="180" y="30" width="640" height="140" rx="6" fill="#ffffff" stroke="#3370ff" stroke-width="2"/>
+    <rect x="180" y="30" width="640" height="30" rx="6" fill="#3370ff"/>
+    <text x="196" y="51" font-size="15" font-weight="bold" fill="#ffffff">S1 · 调试排班</text>
+    <text x="196" y="92" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">角色　</tspan>调试部客服（执行）</text>
+    <text x="196" y="113" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">配合　</tspan>调试客服排班；调试师特殊情况报备</text>
+    <text x="196" y="134" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">做什么　</tspan>按照正常固定调试时间排班，每天做</text>
+    <text x="196" y="155" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">卡壳　</tspan>调试师特殊情况报备请假</text>
+  </g>
+  <g>
+    <rect x="180" y="232" width="640" height="119" rx="6" fill="#ffffff" stroke="#3370ff" stroke-width="2"/>
+    <rect x="180" y="232" width="640" height="30" rx="6" fill="#3370ff"/>
+    <text x="196" y="253" font-size="15" font-weight="bold" fill="#ffffff">S2 · 公布排班信息</text>
+    <text x="196" y="294" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">角色　</tspan>调试部客服（执行）</text>
+    <text x="196" y="315" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">配合　</tspan>调试客服公布，运营接收</text>
+    <text x="196" y="336" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">做什么　</tspan>排班表公布到运营群公示，每天做</text>
+  </g>
+  <g>
+    <rect x="180" y="413" width="640" height="140" rx="6" fill="#ffffff" stroke="#3370ff" stroke-width="2"/>
+    <rect x="180" y="413" width="640" height="30" rx="6" fill="#3370ff"/>
+    <text x="196" y="434" font-size="15" font-weight="bold" fill="#ffffff">S3 · 新主播报备登记</text>
+    <text x="196" y="475" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">角色　</tspan>运营（执行）</text>
+    <text x="196" y="496" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">配合　</tspan>调试部客服（接收登记）</text>
+    <text x="196" y="517" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">做什么　</tspan>新主播信息报备到客服登记，每天做</text>
+    <text x="196" y="538" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">卡壳　</tspan>新主播如果不在客服报备登记，运营约调将不予通过</text>
+  </g>
+  <g>
+    <rect x="180" y="615" width="640" height="161" rx="6" fill="#ffffff" stroke="#3370ff" stroke-width="2"/>
+    <rect x="180" y="615" width="640" height="30" rx="6" fill="#3370ff"/>
+    <text x="196" y="636" font-size="15" font-weight="bold" fill="#ffffff">S4 · 调试方案沟通</text>
+    <text x="196" y="677" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">角色　</tspan>运营（执行）</text>
+    <text x="196" y="698" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">配合　</tspan>调试师（协商方案，准备服装、灯光、环境物品）</text>
+    <text x="196" y="719" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">做什么　</tspan>运营根据公布的排班信息找到调试师沟通方案、准备好调试素材与方案参考，</text>
+      <text x="254" y="740" font-size="12.5" fill="#1f2329">确认好直播间，然后开始约调</text>
+    <text x="196" y="761" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">卡壳　</tspan>运营不沟通</text>
+  </g>
+  <g>
+    <rect x="180" y="838" width="640" height="140" rx="6" fill="#ffffff" stroke="#3370ff" stroke-width="2"/>
+    <rect x="180" y="838" width="640" height="30" rx="6" fill="#3370ff"/>
+    <text x="196" y="859" font-size="15" font-weight="bold" fill="#ffffff">S5 · 预约调试</text>
+    <text x="196" y="900" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">角色　</tspan>运营（执行）</text>
+    <text x="196" y="921" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">配合　</tspan>调试部客服（审核）</text>
+    <text x="196" y="942" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">做什么　</tspan>运营预约主播对应的沟通方案后的调试师</text>
+    <text x="196" y="963" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">卡壳　</tspan>运营约错调试，需要调试部客服确认后重新安排或者取消</text>
+  </g>
+  <g>
+    <rect x="180" y="1040" width="640" height="140" rx="6" fill="#ffffff" stroke="#3370ff" stroke-width="2"/>
+    <rect x="180" y="1040" width="640" height="30" rx="6" fill="#3370ff"/>
+    <text x="196" y="1061" font-size="15" font-weight="bold" fill="#ffffff">S6 · 调试</text>
+    <text x="196" y="1102" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">角色　</tspan>调试师（执行）</text>
+    <text x="196" y="1123" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">配合　</tspan>运营、主播（配合）</text>
+    <text x="196" y="1144" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">做什么　</tspan>灯光、美颜调试</text>
+    <text x="196" y="1165" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">卡壳　</tspan>如果调试效果不满意，会重新分配调试、沟通方案</text>
+  </g>
+  <g>
+    <rect x="180" y="1242" width="640" height="140" rx="6" fill="#ffffff" stroke="#3370ff" stroke-width="2"/>
+    <rect x="180" y="1242" width="640" height="30" rx="6" fill="#3370ff"/>
+    <text x="196" y="1263" font-size="15" font-weight="bold" fill="#ffffff">S7 · 调试登记</text>
+    <text x="196" y="1304" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">角色　</tspan>调试师（执行）</text>
+    <text x="196" y="1325" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">配合　</tspan>数据部刘奕阳（接收）</text>
+    <text x="196" y="1346" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">做什么　</tspan>调试师登记调试日期、主播编号、调试师姓名等字段的调试记录</text>
+    <text x="196" y="1367" font-size="12.5" fill="#1f2329"><tspan font-weight="bold" fill="#3370ff">卡壳　</tspan>主播编号填写错误、忘记填写登记记录</text>
+  </g>
+  <rect x="180" y="1444" width="640" height="44" rx="22" fill="#f2f3f5" stroke="#c9cdd4" stroke-width="1.5"/>
+  <text x="500.0" y="1472" font-size="14" fill="#4e5969" text-anchor="middle">终点：调试师调试后完成调试登记</text>
+  <line x1="500" y1="170" x2="500" y2="232" stroke="#4e5969" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="516" y="190" font-size="11.5" fill="#c04107">条件：排班表发布且无临时请假变更</text>
+  <line x1="500" y1="351" x2="500" y2="413" stroke="#4e5969" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="516" y="371" font-size="11.5" fill="#c04107">条件：公布完排班信息后，运营和调试沟通方案</text>
+  <line x1="500" y1="553" x2="500" y2="615" stroke="#4e5969" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="516" y="573" font-size="11.5" fill="#c04107">条件：新主播登记后拉群，才能开始约调</text>
+  <line x1="500" y1="776" x2="500" y2="838" stroke="#4e5969" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="516" y="796" font-size="11.5" fill="#c04107">条件：方案沟通确定好</text>
+  <line x1="500" y1="978" x2="500" y2="1040" stroke="#4e5969" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="516" y="998" font-size="11.5" fill="#c04107">条件：调试部客服根据约调记录与调试师确认是否沟通协商过，确认无误后审核通过</text>
+  <line x1="500" y1="1180" x2="500" y2="1242" stroke="#4e5969" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="516" y="1200" font-size="11.5" fill="#c04107">条件：调试后发送调试效果图</text>
+  <line x1="500" y1="1382" x2="500" y2="1444" stroke="#4e5969" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="516" y="1404" font-size="11.5" fill="#c04107">条件：确认当天的调试已登记 → 结束</text>
+  <path d="M 820 915 L 890 915 L 890 704 L 828 704" fill="none" stroke="#d4380d" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowRed)"/>
+  <path d="M 820 1117 L 940 1117 L 940 704 L 828 704" fill="none" stroke="#d4380d" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowRed)"/>
+  <text x="902" y="809" font-size="11" fill="#d4380d" transform="rotate(90 902 809)">回到 S4（重新安排或取消）</text>
+  <text x="952" y="910" font-size="11" fill="#d4380d" transform="rotate(90 952 910)">回到 S4（重新沟通方案）</text>
+    </svg>
+    <p class="hint">读图说明：矩形 = 流程节点，节点内写角色和动作；箭头上的红字 = 进入下一节点的条件；红色虚线 = 分支回流；灰色圆角 = 终点。起点：调试师与调试部客服沟通安排好排班时间、做好排班信息表。</p>
+  </div>
+
+  <h2>二、节点明细表（流程图的文字版，便于填表）</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>节点</th><th>角色（谁负责 / 谁配合）</th><th>做什么工作</th><th>这一步的产出物 + 谁负责维护</th><th>现状如何衔接（什么情况下进下一步 / 卡壳时现在怎么发生）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">S1<br>调试排班</td>
+          <td>调试部客服（执行）<br>配合：调试客服排班；调试师特殊情况报备</td>
+          <td>按照正常固定调试时间排班，每天做</td>
+          <td>上海：调试部登记系统「排班信息表」<br>无锡：调试部登记系统「调试排班表」<br><b>维护人：</b>调试部客服</td>
+          <td>→ S2　<b>现状：</b>排班表发布且无临时请假变更<br><span class="neg">卡壳实况：</span>调试师特殊情况报备请假</td>
+        </tr>
+        <tr>
+          <td class="num">S2<br>公布排班信息</td>
+          <td>调试部客服（执行）<br>配合：调试客服公布，运营接收</td>
+          <td>排班表公布到运营群公示，每天做</td>
+          <td>上海：调试部登记系统「排班信息表」<br>无锡：调试部登记系统「调试排班表」<br><b>维护人：</b>调试部客服</td>
+          <td>→ S3　<b>现状：</b>公布完排班信息后，运营和调试沟通方案<br><span class="neg">卡壳实况：</span><span class='empty'>—（本格未填）</span></td>
+        </tr>
+        <tr>
+          <td class="num">S3<br>新主播报备登记</td>
+          <td>运营（执行）<br>配合：调试部客服（接收登记）</td>
+          <td>新主播信息报备到客服登记，每天做</td>
+          <td>2026 调试预约排班表「新主播分配表」（新主播分配信息）<br><b>维护人：</b>调试部客服</td>
+          <td>→ S4　<b>现状：</b>新主播登记后拉群，才能开始约调<br><span class="neg">卡壳实况：</span>新主播如果不在客服报备登记，运营约调将不予通过</td>
+        </tr>
+        <tr>
+          <td class="num">S4<br>调试方案沟通</td>
+          <td>运营（执行）<br>配合：调试师（协商方案，准备服装、灯光、环境物品）</td>
+          <td>运营根据公布的排班信息找到调试师沟通方案、准备好调试素材与方案参考，确认好直播间，然后开始约调</td>
+          <td>上海：「预约登记表」（与调试沟通截图，素材与调试私下共享或发布到群内）<br>无锡：「约调试表」（上镜素材）<br><b>维护人：</b>调试部客服</td>
+          <td>→ S5　<b>现状：</b>方案沟通确定好<br><span class="neg">卡壳实况：</span>运营不沟通</td>
+        </tr>
+        <tr>
+          <td class="num">S5<br>预约调试</td>
+          <td>运营（执行）<br>配合：调试部客服（审核）</td>
+          <td>运营预约主播对应的沟通方案后的调试师</td>
+          <td>上海：「预约登记表」（约调记录）<br>无锡：「约调试表」（约调记录）<br><b>维护人：</b>调试部客服</td>
+          <td>→ S6　<span class='neg'>（异常：回到 S4）</span>　<b>现状：</b>调试部客服根据约调记录与调试师确认是否沟通协商过，确认无误后审核通过<br><span class="neg">卡壳实况：</span>运营约错调试，需要调试部客服确认后重新安排或者取消</td>
+        </tr>
+        <tr>
+          <td class="num">S6<br>调试</td>
+          <td>调试师（执行）<br>配合：运营、主播（配合）</td>
+          <td>灯光、美颜调试</td>
+          <td>上海：「调试师-登记表」（调试效果图，非数据，登记到登记表中）<br>无锡：「约调试表」（调试师直接登记调试效果图，把约调记录作为登记记录）<br><b>维护人：</b>调试部客服</td>
+          <td>→ S7　<span class='neg'>（异常：回到 S4）</span>　<b>现状：</b>调试后发送调试效果图<br><span class="neg">卡壳实况：</span>如果调试效果不满意，会重新分配调试、沟通方案</td>
+        </tr>
+        <tr>
+          <td class="num">S7<br>调试登记</td>
+          <td>调试师（执行）<br>配合：数据部刘奕阳（接收）</td>
+          <td>调试师登记调试日期、主播编号、调试师姓名等字段的调试记录</td>
+          <td>上海：「调试师-登记表」（调试登记记录）<br>无锡：「约调试表」（把约调记录作为登记记录）<br><b>维护人：</b>数据部 · 刘奕阳</td>
+          <td>→ 终点　<b>现状：</b>确认当天的调试已登记<br><span class="neg">卡壳实况：</span>主播编号填写错误、忘记填写登记记录</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="hint"><b>这一列只写观察，不写规则</b>：记的是"现在卡壳时实际怎么发生的、造成了什么后果"，不是"以后应该怎么处理"。产出物那列则是给「数据表设计」提供建表依据。表中「上海 / 无锡」两行分别对应两地登记系统中实际使用的表名。</p>
+  </div>
+
+  <h2>三、交付验收自查清单</h2>
+  <div class="card">
+    <ul class="checklist">
+      <li>流程图画出了完整链路：起点 → 各节点 → 分支/回流 → 终点，没有断点。</li>
+      <li>每个节点都标了角色，区分"谁执行"和"谁配合/输入"。</li>
+      <li>每个节点都写了具体做什么，不是"处理需求"这类空话。</li>
+      <li>每条箭头都写了进入下一节点的条件，条件可判断（不是"看情况""酌情"）。</li>
+      <li>存在分支或回流的地方已画出（如变更要回到发布环节）。</li>
+      <li>只描述现状，没有夹带"建议改成……"的优化内容。</li>
+      <li>已标注这条 SOP 的优先级，且与任务台账中对应任务的「优先级」字段一致。</li>
+      <li>已界定这条 SOP 的起点和终点，范围是一个可独立跑完的端到端任务，与部门其他 SOP 不重叠。</li>
+      <li>每个节点都写明了产出物是什么、由谁维护。</li>
+      <li>卡壳的地方只记了现状实况和后果，没有夹带"应该怎么处理"的规则设计。</li>
+    </ul>
+    <p class="hint">逐条确认通过后在方框内打勾。</p>
+  </div>
+
+  <h2>四、空白模板（复制即可用）</h2>
+  <div class="card">
+    <p class="hint" style="margin-top:0">先填边界：起点 = ______　终点 = ______　这条 SOP 的优先级 = ______（与台账一致）</p>
+    <table>
+      <thead>
+        <tr><th>节点</th><th>角色（谁负责/谁配合）</th><th>做什么工作</th><th>产出物 + 谁维护</th><th>现状如何往下走</th><th>卡壳时现在怎么发生（只记观察）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">S1</td><td class="empty">谁执行、谁配合</td><td class="empty">具体动作</td><td class="empty">产出什么、谁维护</td><td class="empty">实际什么情况进下一步</td><td class="empty">现在卡壳是怎么发生的、什么后果</td></tr>
+        <tr><td class="num">S2</td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="num">…</td><td></td><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="hint">流程图的画法：每个节点画一个方框，框内写节点名、角色、做什么；节点之间画箭头，箭头旁写上条件：……；有分支画菱形或另起一支，有回流画虚线箭头指回对应节点；无变更/无异常的路径也要画到终点。</p>
+    <p class="hint">交付时先标注这条 SOP 的优先级（P0 / P1 / P2），取值与任务台账中对应任务的「优先级」字段保持一致，不要自行另定。</p>
+  </div>
+
+  <p class="foot">调试部「上镜调试执行」SOP · 对应台账任务 R-SOP · 版本 v0.1 · 编制：调试部（据填写表整理）</p>
+</div>
+</body>
+</html>
