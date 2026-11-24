@@ -41,6 +41,20 @@
   .scope ul { margin:8px 0 2px; padding-left:22px; }
   .scope li { margin:3px 0; }
   .neg { color:#cf1322; }
+  .records table { min-width: 455px; }
+  .records .flow-wrap { margin-top: 12px; }
+  .records button { font: inherit; cursor: pointer; padding: 5px 10px; border: 1px solid #c9cdd4; border-radius: 5px; background: #fff; color: #1f2329; }
+  .records button[data-add], .records button[type="submit"] { color: #fff; background: #2459c4; border-color: #2459c4; }
+  .records button[data-delete] { color: #b42318; }
+  .records form { margin-top: 12px; padding: 12px; background: #f5f7fb; border-radius: 6px; }
+  .records form label { display: block; font-size: 14px; margin-bottom: 8px; }
+  .records input, .records textarea { display: block; width: 100%; padding: 6px 8px; font: inherit; border: 1px solid #8f959e; border-radius: 4px; }
+  .records textarea { resize: vertical; }
+  .records input:focus-visible, .records textarea:focus-visible, .records button:focus-visible { outline: 2px solid #3370ff; outline-offset: 2px; }
+  .records .actions { display: flex; gap: 5px; }
+  .records [data-status] { color: #515b69; }
+  .records td { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .records td:last-child { white-space: normal; }
 </style>
 </head>
 <body>
@@ -261,7 +275,28 @@
     <p class="hint"><b>这一列只写观察，不写规则</b>：记的是"现在卡壳时实际怎么发生的、造成了什么后果"，不是"以后应该怎么处理"。产出物那列则是给「数据表设计」提供建表依据。表中「上海 / 无锡」两行分别对应两地登记系统中实际使用的表名。</p>
   </div>
 
-  <h2>三、交付验收自查清单</h2>
+  <section class="records" data-records="definitions" aria-labelledby="definitions-heading">
+    <h2 id="definitions-heading">三、关键字段与现行口径</h2>
+    <div class="card">
+      <p class="hint" style="margin-top:0">一条记录填一个字段或已有统计项。例：记录日期｜填写事项实际发生的日期｜《示例登记表》「记录日期」列。</p>
+      <button type="button" data-add>新增记录</button>
+      <form hidden>
+        <label>项目名称<input name="name" placeholder="填写字段或已有统计项名称" required></label>
+        <label>定义或填写口径<textarea name="detail" rows="3" placeholder="字段写含义和填法，已有统计项写计算口径" required></textarea></label>
+        <label>依据位置<input name="source" placeholder="填写表名和列名，或文档名称和章节"></label>
+        <button type="submit">保存</button> <button type="button" data-cancel>取消</button>
+      </form>
+      <p class="hint" data-status role="status"></p>
+      <div class="flow-wrap" tabindex="0" role="region" aria-label="关键字段与现行口径记录">
+        <table>
+          <thead><tr><th scope="col">项目</th><th scope="col">定义或填写口径</th><th scope="col">依据位置</th><th scope="col">操作</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <h2>四、交付验收自查清单</h2>
   <div class="card">
     <ul class="checklist">
       <li>流程图画出了完整链路：起点 → 各节点 → 分支/回流 → 终点，没有断点。</li>
@@ -278,7 +313,28 @@
     <p class="hint">逐条确认通过后在方框内打勾。</p>
   </div>
 
-  <h2>四、空白模板（复制即可用）</h2>
+  <section class="records" data-records="sources" aria-labelledby="sources-heading">
+    <h2 id="sources-heading">五、现状依据链接</h2>
+    <div class="card">
+      <p class="hint" style="margin-top:0">一条记录填一个表单、系统或文档入口。有链接就粘贴链接，也可填能找到材料的路径。</p>
+      <button type="button" data-add>新增记录</button>
+      <form hidden>
+        <label>材料名称<input name="name" placeholder="填写表单、系统或文档名称" required></label>
+        <label>用途<textarea name="detail" rows="2" placeholder="说明在这里填什么或查什么" required></textarea></label>
+        <label>入口<input name="source" placeholder="粘贴链接，或填写系统 → 表名 → 视图" required></label>
+        <button type="submit">保存</button> <button type="button" data-cancel>取消</button>
+      </form>
+      <p class="hint" data-status role="status"></p>
+      <div class="flow-wrap" tabindex="0" role="region" aria-label="现状依据链接记录">
+        <table>
+          <thead><tr><th scope="col">材料名称</th><th scope="col">用途</th><th scope="col">入口</th><th scope="col">操作</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <h2>六、空白模板（复制即可用）</h2>
   <div class="card">
     <p class="hint" style="margin-top:0">先填边界：起点 = ______　终点 = ______　这条 SOP 的优先级 = ______（与台账一致）</p>
     <table>
@@ -297,5 +353,161 @@
 
   <p class="foot">调试部「上镜调试执行」SOP · 对应台账任务 R-SOP · 版本 v0.1 · 编制：调试部（据填写表整理）</p>
 </div>
+<script>
+  for (const section of document.querySelectorAll('[data-records]')) {
+    const type = section.dataset.records;
+    const storageKey = `arvinhal.sop.records.v1.${type}`;
+    const fields = ['name', 'detail', 'source'];
+    const table = section.querySelector('tbody');
+    const form = section.querySelector('form');
+    const status = section.querySelector('[data-status]');
+    const add = section.querySelector('[data-add]');
+    let records = [];
+    let editing = null;
+
+    function read() {
+      const value = JSON.parse(localStorage.getItem(storageKey) ?? '[]');
+      if (!Array.isArray(value)) throw new Error('Invalid record list');
+      return value;
+    }
+
+    function button(label, action, record) {
+      const element = document.createElement('button');
+      element.type = 'button';
+      element.textContent = label;
+      element.dataset[action] = record.id;
+      element.setAttribute('aria-label', `${label}：${record.name}`);
+      return element;
+    }
+
+    function render() {
+      table.replaceChildren();
+      if (!records.length) {
+        const cell = table.insertRow().insertCell();
+        cell.colSpan = 4;
+        cell.textContent = '暂无记录。点击「新增记录」开始填写。';
+        return;
+      }
+      for (const record of records) {
+        const row = table.insertRow();
+        for (const field of fields) {
+          const cell = row.insertCell();
+          const value = record[field];
+          if (type === 'sources' && field === 'source' && /^https?:\/\/[^\s]+$/i.test(value)) {
+            const link = document.createElement('a');
+            link.href = value;
+            link.textContent = value;
+            cell.append(link);
+          } else {
+            cell.textContent = value;
+          }
+        }
+        const controls = document.createElement('div');
+        controls.className = 'actions';
+        controls.append(button('修改', 'edit', record), button('删除', 'delete', record));
+        row.insertCell().append(controls);
+      }
+    }
+
+    function refresh() {
+      try {
+        records = read();
+        render();
+        status.textContent = '记录保存在当前浏览器，刷新后可继续编辑。';
+      } catch {
+        status.textContent = '读取失败，请检查浏览器是否允许本地存储。';
+      }
+    }
+
+    function showForm(record = null) {
+      editing = record;
+      for (const field of fields) form.elements.namedItem(field).value = record?.[field] ?? '';
+      form.hidden = false;
+      form.elements.namedItem('name').focus();
+    }
+
+    function hideForm() {
+      form.hidden = true;
+      form.reset();
+      editing = null;
+      add.focus();
+    }
+
+    function persist(next) {
+      localStorage.setItem(storageKey, JSON.stringify(next));
+      records = next;
+      render();
+    }
+
+    add.addEventListener('click', () => showForm());
+    form.querySelector('[data-cancel]').addEventListener('click', hideForm);
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const values = {};
+      for (const field of fields) {
+        const input = form.elements.namedItem(field);
+        values[field] = input.value.trim();
+        if (input.required && !values[field]) {
+          status.textContent = `请填写${input.labels[0].textContent}。`;
+          input.focus();
+          return;
+        }
+      }
+      try {
+        const current = read();
+        if (editing) {
+          const index = current.findIndex(record => record.id === editing.id);
+          if (index < 0 || fields.some(field => current[index][field] !== editing[field])) {
+            refresh();
+            status.textContent = '这条记录已在其他页面更改。请核对表格后重新编辑。';
+            return;
+          }
+          current[index] = { id: editing.id, ...values };
+        } else {
+          const id = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+          current.push({ id, ...values });
+        }
+        persist(current);
+        hideForm();
+        status.textContent = '已保存到当前浏览器。';
+      } catch {
+        status.textContent = '保存失败，填写内容已保留，请检查浏览器存储后重试。';
+      }
+    });
+
+    table.addEventListener('click', event => {
+      const hit = event.target.closest('button');
+      if (!hit) return;
+      const record = records.find(item => item.id === (hit.dataset.edit ?? hit.dataset.delete));
+      if (!record) return;
+      if (hit.dataset.edit) {
+        showForm(record);
+        return;
+      }
+      if (!window.confirm(`删除「${record.name}」这条记录？`)) return;
+      try {
+        const current = read();
+        const stored = current.find(item => item.id === record.id);
+        if (!stored || fields.some(field => stored[field] !== record[field])) {
+          refresh();
+          status.textContent = '记录已在其他页面更改，请核对后再删除。';
+          return;
+        }
+        persist(current.filter(item => item.id !== record.id));
+        if (editing?.id === record.id) hideForm();
+        add.focus();
+        status.textContent = '记录已删除。';
+      } catch {
+        status.textContent = '删除失败，请检查浏览器存储后重试。';
+      }
+    });
+
+    window.addEventListener('storage', event => {
+      if (event.key === storageKey || event.key === null) refresh();
+    });
+    refresh();
+  }
+</script>
 </body>
 </html>
