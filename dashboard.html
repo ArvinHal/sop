@@ -81,32 +81,29 @@
         --scope-hero-middle: #142a5b;
         --scope-hero-end: #124399;
       }
-      .shell[data-scope-kind="group"] {
-        --scope-ink: #644294;
-        --scope-accent: #8256b6;
-        --scope-light: #f3edfc;
-        --scope-line: #e2d6f5;
-        --scope-hero-start: #2a1e44;
-        --scope-hero-middle: #3d285d;
-        --scope-hero-end: #674394;
+      .shell:is([data-scope-kind="group"], [data-scope-kind="team"], [data-scope-kind="person"]) {
+        --scope-ink: hsl(var(--group-hue) var(--group-saturation) 28%);
+        --scope-accent: hsl(var(--group-hue) var(--group-saturation) 39%);
+        --scope-light: hsl(var(--group-hue) var(--group-saturation) 96%);
+        --scope-line: hsl(var(--group-hue) var(--group-saturation) 84%);
+        --scope-hero-start: hsl(var(--group-hue) var(--group-saturation) var(--hero-low));
+        --scope-hero-middle: hsl(var(--group-hue) var(--group-saturation) var(--hero-mid));
+        --scope-hero-end: hsl(var(--group-hue) var(--group-saturation) var(--hero-high));
+        --hero-low: 13%;
+        --hero-mid: 20%;
+        --hero-high: 29%;
       }
       .shell[data-scope-kind="team"] {
-        --scope-ink: #14655d;
-        --scope-accent: #278479;
-        --scope-light: #e7f5f1;
-        --scope-line: #c4e7df;
-        --scope-hero-start: #153730;
-        --scope-hero-middle: #184a44;
-        --scope-hero-end: #1c7065;
+        --scope-angle: 98deg;
+        --hero-low: 18%;
+        --hero-mid: 24%;
+        --hero-high: 29%;
       }
       .shell[data-scope-kind="person"] {
-        --scope-ink: #913f29;
-        --scope-accent: #b96346;
-        --scope-light: #fdf0e9;
-        --scope-line: #f0d9ca;
-        --scope-hero-start: #3e2427;
-        --scope-hero-middle: #552e2c;
-        --scope-hero-end: #87482e;
+        --scope-angle: 148deg;
+        --hero-low: 21%;
+        --hero-mid: 25%;
+        --hero-high: 29%;
       }
       .rail {
         background: var(--navy);
@@ -303,10 +300,9 @@
       }
       .hero {
         background: linear-gradient(
-          115deg,
-          var(--scope-hero-start) 0%,
-          var(--scope-hero-middle) 63%,
-          var(--scope-hero-end) 100%
+          var(--scope-angle, 115deg),
+          var(--scope-hero-stops,
+            var(--scope-hero-start) 0%, var(--scope-hero-middle) 63%, var(--scope-hero-end) 100%)
         );
         color: #fff;
         position: relative;
@@ -383,6 +379,25 @@
         border-radius: 6px;
         font-size: 12px;
         line-height: 1.45;
+      }
+      .group-marker {
+        display: inline-flex;
+        vertical-align: middle;
+        overflow: hidden;
+        height: 9px;
+        width: 20px;
+        border-radius: 3px;
+        margin: 0 6px 2px 0;
+      }
+      .group-marker i {
+        flex: 1;
+        background: hsl(var(--marker-hue, 0) var(--marker-saturation, 0%) 42%);
+      }
+      .scope-affiliations .group-chip {
+        background: hsl(var(--marker-hue, 0) var(--marker-saturation, 0%) 94%);
+        color: hsl(var(--marker-hue, 0) var(--marker-saturation, 0%) 24%);
+        border-color: transparent;
+        font-weight: 650;
       }
       .hero h1 {
         font-size: clamp(27px, 3.3vw, 44px);
@@ -2897,6 +2912,7 @@
           const button = makeButton(displayName(record), () =>
             openRecord(record),
           );
+          markRecordGroup(button, record);
           button.title = `打开${displayName(record)}的看板`;
           box.append(button);
           if (record.scope === "person") {
@@ -3119,8 +3135,10 @@
                 fill.style.width = `${(value / max) * 100}%`;
               track.append(fill);
             }
+            const recordLabel = el("span", displayName(record));
+            markRecordGroup(recordLabel, record);
             button.append(
-              el("span", displayName(record)),
+              recordLabel,
               track,
               el(
                 "span",
@@ -3471,6 +3489,50 @@
             ? `${values.filter((v) => v >= 1).length} / ${values.length}`
             : null;
         }
+        const directorGroupHues = new Map([
+          ["何礼霞组", 224], ["张创新组", 167], ["摆玉婷组", 280], ["郭梦薇组", 35],
+        ]);
+        function groupHue(name) {
+          if (directorGroupHues.has(name)) return directorGroupHues.get(name);
+          let hash = 0;
+          for (const char of name) hash = (31 * hash + char.codePointAt(0)) >>> 0;
+          return hash % 360;
+        }
+        function directorGroups(record) {
+          if (!record || !["group", "team", "person"].includes(record.scope)) return [];
+          if (record.scope === "group") return [displayName(record).replace(/^group:/, "")];
+          let refs = [
+            record.group,
+            ...(record.scope === "team" && Array.isArray(record.groups) ? record.groups : []),
+          ].map(exactText).filter(Boolean);
+          if (record.scope === "team" && !refs.length) {
+            refs = records()
+              .filter((person) => person.scope === "person" && belongs(person.team, record))
+              .map((person) => exactText(person.group)).filter(Boolean);
+          }
+          const names = refs.map((ref) => {
+            const group = lookup("group", ref);
+            return (group ? displayName(group) : ref).replace(/^group:/, "");
+          });
+          return [...new Set(names)].sort((a, b) => a.localeCompare(b, "zh-CN"));
+        }
+        function markRecordGroup(label, record) {
+          if (!["group", "team", "person"].includes(record.scope)) return;
+          const names = directorGroups(record);
+          const description = names.length ? names.join("、") : "总监组归属待补";
+          const marker = el("span", null, "group-marker");
+          marker.setAttribute("aria-hidden", "true");
+          for (const name of names.length ? names : [""]) {
+            const stripe = el("i");
+            if (name) {
+              stripe.style.setProperty("--marker-hue", groupHue(name));
+              stripe.style.setProperty("--marker-saturation", "55%");
+            }
+            marker.append(stripe);
+          }
+          label.title = description;
+          label.prepend(marker);
+        }
         function renderScopeContext(record) {
           const kind =
             state.role === "person"
@@ -3482,7 +3544,20 @@
                   : state.site !== "all"
                     ? "site"
                     : "department";
-          document.querySelector(".shell").dataset.scopeKind = kind;
+          const shell = document.querySelector(".shell");
+          shell.dataset.scopeKind = kind;
+          const groups = directorGroups(record);
+          const hues = groups.map(groupHue);
+          shell.style.setProperty("--group-hue", hues.length === 1 ? hues[0] : 0);
+          shell.style.setProperty("--group-saturation", hues.length === 1 ? "55%" : "0%");
+          if (hues.length > 1) {
+            const stops = hues.map((hue, i) =>
+              `hsl(${hue} 55% ${20 + (8 * i) / (hues.length - 1)}%)`
+            );
+            shell.style.setProperty("--scope-hero-stops", stops.join(", "));
+          } else {
+            shell.style.removeProperty("--scope-hero-stops");
+          }
           $("scope-tag").textContent = {
             department: "部门总览",
             site: "场地总览",
@@ -3491,16 +3566,21 @@
             person: state.personEntry === "captain" ? "队员" : "组员",
           }[kind];
 
-          const groups = Array.isArray(record?.groups)
-            ? record.groups
-            : [record?.group];
+          const chips = kind === "team" || kind === "person" ? groups.map((name) => {
+            const chip = el("span", name, "group-chip");
+            chip.style.setProperty("--marker-hue", groupHue(name));
+            chip.style.setProperty("--marker-saturation", "55%");
+            return chip;
+          }) : [];
+          if (record && (kind === "team" || kind === "person") && !chips.length)
+            chips.push(el("span", "总监组归属待补", "group-chip"));
           const affiliations = [
-            ...groups.filter((group) => exactText(group)),
             record?.team,
             kind === "person" && detector(record),
             kind === "person" && record?.role,
           ].filter((value) => exactText(value));
           $("scope-affiliations").replaceChildren(
+            ...chips,
             ...[...new Set(affiliations)].map((name) => el("span", name)),
           );
           $("hero-description").textContent = {
