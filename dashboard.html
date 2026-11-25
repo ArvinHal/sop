@@ -213,6 +213,7 @@
         display: flex;
         gap: 8px;
         align-items: center;
+        flex-wrap: wrap;
       }
       .quiet,
       .file-button {
@@ -531,6 +532,125 @@
         stroke: #fff;
         stroke-width: 1.5;
       }
+      .work-calendar {
+        margin-top: 14px;
+      }
+      .calendar-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(220px, 1fr);
+        gap: 20px;
+        align-items: start;
+        margin-top: 12px;
+      }
+      .calendar-layout[hidden] {
+        display: none;
+      }
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 5px;
+      }
+      .calendar-weekday {
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+        padding: 2px 0 5px;
+      }
+      .calendar-day {
+        border: 1px solid #dce6f5;
+        border-radius: 8px;
+        background: #f5f8fd;
+        color: #163f84;
+        display: grid;
+        justify-items: center;
+        padding: 5px 1px;
+        min-height: 44px;
+        font-variant-numeric: tabular-nums;
+      }
+      .calendar-day time {
+        font-size: 10px;
+      }
+      .calendar-day strong {
+        font-size: 14px;
+      }
+      .calendar-day[data-level="1"] {
+        background: #edf3ff;
+      }
+      .calendar-day[data-level="2"] {
+        background: #dce9ff;
+      }
+      .calendar-day[data-level="3"] {
+        background: #bfd5ff;
+      }
+      .calendar-day[data-level="4"] {
+        background: #9dbffe;
+      }
+      .calendar-day[aria-pressed="true"] {
+        border-color: var(--blue);
+        box-shadow: inset 0 0 0 1px var(--blue);
+      }
+      .calendar-day:disabled {
+        background: #fff;
+        color: #697a93;
+        cursor: default;
+      }
+      .calendar-detail {
+        background: #f4f7fd;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 13px;
+      }
+      .calendar-detail h3 {
+        font-size: 15px;
+        margin: 0;
+        font-variant-numeric: tabular-nums;
+      }
+      .calendar-detail dl {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin: 11px 0 7px;
+      }
+      .calendar-detail dt,
+      .calendar-breakdown {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .calendar-detail dd {
+        color: #153e82;
+        font-size: 22px;
+        font-weight: 750;
+        margin: 4px 0 0;
+      }
+      .calendar-breakdown {
+        margin: 0;
+      }
+      .calendar-mix {
+        display: flex;
+        height: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 8px 0 7px;
+      }
+      .calendar-mix span[data-kind="regular"] {
+        background: #3565c6;
+      }
+      .calendar-mix span[data-kind="proxy"] {
+        background: #587bb4;
+      }
+      .calendar-mix span[data-kind="lighting"] {
+        background: #b8751c;
+      }
+      @media (max-width: 660px) {
+        .calendar-layout {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 10px;
+        }
+        .calendar-grid {
+          gap: 3px;
+        }
+      }
       .empty {
         display: grid;
         place-items: center;
@@ -568,6 +688,111 @@
       .rankings,
       .matrix {
         margin-top: 14px;
+      }
+      .comparison-panel {
+        margin-top: 14px;
+      }
+      .comparison-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px 13px;
+      }
+      .comparison-detail {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 7px 12px;
+        margin: 12px 0 7px;
+        padding: 9px 11px;
+        min-height: 45px;
+        background: #f4f7fd;
+        border: 1px solid #e4ebf5;
+        border-radius: 9px;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .comparison-detail strong {
+        font-variant-numeric: tabular-nums;
+      }
+      .comparison-detail small {
+        color: var(--muted);
+      }
+      .comparison-detail .quiet {
+        padding: 4px 8px;
+        color: #1549b5;
+      }
+      .comparison-bars {
+        display: grid;
+        gap: 3px;
+        max-height: 335px;
+        overflow: auto;
+        padding: 4px;
+      }
+      .comparison-row {
+        display: grid;
+        grid-template-columns: clamp(88px, 15vw, 155px) minmax(0, 1fr) minmax(
+            56px,
+            max-content
+          );
+        align-items: center;
+        gap: 11px;
+        width: 100%;
+        min-width: 0;
+        min-height: 36px;
+        padding: 6px 9px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: #fff;
+        font-size: 13px;
+        text-align: left;
+      }
+      .comparison-row:hover,
+      .comparison-row[aria-pressed="true"] {
+        background: #f2f6ff;
+        border-color: #dce7fb;
+      }
+      .comparison-row > :first-child {
+        overflow-wrap: anywhere;
+        line-height: 1.25;
+      }
+      .comparison-track {
+        background: #e9eff9;
+        display: block;
+        height: 10px;
+        border-radius: 10px;
+      }
+      .comparison-fill {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: #4d75d4;
+      }
+      .comparison-row[aria-pressed="true"] .comparison-fill {
+        background: #2159d6;
+      }
+      .comparison-fill.zero {
+        width: 5px;
+      }
+      .comparison-row .comparison-missing {
+        background: transparent;
+        border: 1px dashed #c4cede;
+      }
+      .comparison-value {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      @media (max-width: 520px) {
+        .comparison-row {
+          grid-template-columns: minmax(68px, 25%) minmax(0, 1fr) minmax(
+              50px,
+              max-content
+            );
+          gap: 7px;
+          min-height: 42px;
+          padding: 5px 6px;
+        }
       }
       .table-area {
         overflow: auto;
@@ -656,6 +881,77 @@
       }
       .chart-source .table-area {
         margin-top: 8px;
+      }
+      #aud-chart {
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+      }
+      #aud-chart svg[data-value-labels="all"] {
+        min-width: var(--audience-min-width);
+      }
+      #aud-chart .audience-point-label {
+        fill: #193f92;
+        font-size: 12px;
+        font-weight: 750;
+        paint-order: stroke;
+        stroke: #fff;
+        stroke-width: 3px;
+        stroke-linejoin: round;
+      }
+      #aud-chart .audience-hit {
+        cursor: pointer;
+      }
+      #aud-chart .audience-point-active {
+        stroke: #132f73;
+        stroke-width: 3px;
+      }
+      .audience-inspector {
+        display: grid;
+        gap: 7px;
+        margin-top: 8px;
+      }
+      .audience-inspector[hidden] {
+        display: none;
+      }
+      .audience-select {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .audience-select select {
+        max-width: 100%;
+        padding: 6px 9px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+      }
+      .audience-reading {
+        padding: 9px 12px;
+        border: 1px solid #dce7fa;
+        border-radius: 9px;
+        background: #f5f8ff;
+      }
+      .audience-reading-line {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+      }
+      .audience-reading-line strong {
+        color: #193f92;
+        font-size: 20px;
+        font-variant-numeric: tabular-nums;
+      }
+      .audience-reading small {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
       }
       .data-details {
         margin-top: 18px;
@@ -932,6 +1228,8 @@
           <header class="topbar"
             ><div class="crumb" id="breadcrumb">调试部数据看板</div
             ><div class="top-actions"
+              ><button class="quiet" type="button" id="jump-details"
+                >查看明细</button
               ><button class="quiet" type="button" id="restore" hidden
                 >返回公开数据</button
               ><button
@@ -1028,17 +1326,103 @@
               ><div id="aud-chart" class="chart"></div
               ><div id="aud-legend" class="legend"
                 ><span><i></i>6h 平均场观</span></div
+              ><div id="aud-inspector" class="audience-inspector" hidden
+                ><label class="audience-select" for="aud-point-select"
+                  >查看场观点
+                  <select id="aud-point-select"></select></label
+                ><div
+                  id="aud-point-reading"
+                  class="audience-reading"
+                ></div></div
               ><details id="aud-sources" class="chart-source" hidden
                 ><summary>查看场观数据来源</summary
                 ><div id="aud-source-table" class="table-area"></div></details
             ></section>
           </div>
+          <section class="panel work-calendar" aria-labelledby="calendar-title">
+            <div class="panel-head">
+              <div>
+                <h2 id="calendar-title">工作量日历</h2>
+                <p>选择日期查看当日登记和预约。</p>
+              </div>
+              <div
+                id="calendar-switch"
+                class="segments"
+                role="group"
+                aria-label="日历统计指标"
+              >
+                <button
+                  type="button"
+                  data-calendar-metric="adjustments"
+                  aria-pressed="true"
+                  >调试数</button
+                >
+                <button
+                  type="button"
+                  data-calendar-metric="appointments"
+                  aria-pressed="false"
+                  >预约数</button
+                >
+              </div>
+            </div>
+            <p id="calendar-empty" class="small-note" hidden
+              >当前范围暂无逐日工作量数据。</p
+            >
+            <div id="calendar-layout" class="calendar-layout">
+              <div
+                id="calendar-grid"
+                class="calendar-grid"
+                role="group"
+                aria-label="逐日工作量"
+              ></div>
+              <div
+                id="calendar-detail"
+                class="calendar-detail"
+                aria-live="polite"
+              ></div>
+            </div>
+          </section>
           <section aria-labelledby="service-title"
             ><div class="section-title"
               ><h2 id="service-title">服务与效果</h2
               ><p id="service-caption"></p></div
             ><div class="metric-grid secondary" id="service-cards"></div
           ></section>
+          <section
+            id="comparison-panel"
+            class="panel comparison-panel"
+            aria-labelledby="comparison-title"
+          >
+            <div class="panel-head">
+              <div
+                ><h2 id="comparison-title">指标对比</h2
+                ><p id="comparison-caption"></p
+              ></div>
+              <div class="comparison-filters">
+                <label
+                  class="field"
+                  id="comparison-scope-field"
+                  for="comparison-scope"
+                  >比较对象<select id="comparison-scope"></select
+                ></label>
+                <label class="field" for="comparison-metric"
+                  >指标<select id="comparison-metric"></select
+                ></label>
+              </div>
+            </div>
+            <div class="comparison-detail">
+              <div id="comparison-value" aria-live="polite"></div>
+              <button type="button" class="quiet" id="comparison-open"
+                >打开所选看板</button
+              >
+            </div>
+            <div
+              class="comparison-bars"
+              id="comparison-bars"
+              role="group"
+              aria-labelledby="comparison-title"
+            ></div>
+          </section>
           <section
             id="table-panel"
             class="panel matrix"
@@ -1542,11 +1926,14 @@
             empty(node, settings.empty);
             return;
           }
-          const width = 542,
+          const showAllLabels = settings.pointLabels === "all";
+          const width = showAllLabels
+              ? Math.max(542, 88 + 70 * (points.length - 1))
+              : 542,
             height = 216,
             left = 53,
-            top = 16,
-            right = 19,
+            top = settings.pointLabels ? 31 : 16,
+            right = settings.pointLabels ? 35 : 19,
             bottom = 31;
           const bodyW = width - left - right,
             bodyH = height - top - bottom;
@@ -1563,6 +1950,28 @@
             role: "img",
             "aria-label": settings.label,
           });
+          if (showAllLabels) {
+            root.dataset.valueLabels = "all";
+            root.style.setProperty(
+              "--audience-min-width",
+              `${72 + 48 * points.length}px`,
+            );
+          }
+          const dotByIndex = new Map();
+          const hitAreas = [];
+          let activeDot, selectedIndex;
+          function highlightPoint(index) {
+            const dot = dotByIndex.get(index);
+            if (!dot) return;
+            activeDot?.classList.remove("audience-point-active");
+            dot.classList.add("audience-point-active");
+            activeDot = dot;
+            settings.inspectPoint(points[index], index);
+          }
+          function selectPoint(index) {
+            selectedIndex = index;
+            highlightPoint(index);
+          }
           for (let n = 0; n <= 4; n++) {
             const val = step * n,
               yp = y(val);
@@ -1594,7 +2003,8 @@
               }),
             );
           let labelIndices;
-          if (points.length <= 5) labelIndices = points.map((_, i) => i);
+          if (showAllLabels || points.length <= 5)
+            labelIndices = points.map((_, i) => i);
           else
             labelIndices = [0, 1, 2, 3, 4].map((i) =>
               Math.round((i * (points.length - 1)) / 4),
@@ -1640,29 +2050,75 @@
                 "stroke-linecap": "round",
               }),
             );
-            visible.forEach(([p, i, v]) => {
+            const labelSlots = new Set(
+              showAllLabels || visible.length <= 5
+                ? visible.map((_, i) => i)
+                : [0, 1, 2, 3, 4].map((i) =>
+                    Math.round((i * (visible.length - 1)) / 4),
+                  ),
+            );
+            visible.forEach(([p, i, v], slot) => {
+              const formatted = settings.formatValue
+                ? settings.formatValue(v)
+                : number(v);
               const dot = svg("circle", {
                 cx: x(i),
                 cy: y(v),
                 r: visible.length > 25 ? 2.3 : 4.2,
                 fill: s.color,
               });
-              dot.append(
-                svg(
-                  "title",
-                  {},
-                  [
-                    `${p.date} · ${s.name} ${settings.formatValue ? settings.formatValue(v) : number(v)}`,
-                    historySource(p),
-                  ]
-                    .filter(Boolean)
-                    .join("\n"),
-                ),
-              );
+              const title = [
+                `${p.date} · ${s.name} ${formatted}`,
+                historySource(p),
+              ]
+                .filter(Boolean)
+                .join("\n");
+              dot.append(svg("title", {}, title));
               root.append(dot);
+              if (settings.pointLabels && labelSlots.has(slot))
+                root.append(
+                  svg(
+                    "text",
+                    {
+                      class: "audience-point-label",
+                      x: x(i),
+                      y: y(v) - 9,
+                      "text-anchor": "middle",
+                    },
+                    formatted,
+                  ),
+                );
+              if (settings.inspectPoint) {
+                dotByIndex.set(i, dot);
+                const halfSlot = bodyW / Math.max(points.length - 1, 1) / 2;
+                const begin = Math.max(left - 16, x(i) - halfSlot);
+                const end = Math.min(width - right + 16, x(i) + halfSlot);
+                const hit = svg("rect", {
+                  class: "audience-hit",
+                  x: begin,
+                  y: top - 18,
+                  width: end - begin,
+                  height: bodyH + 24,
+                  fill: "transparent",
+                  "data-chart-point": p.date,
+                  "aria-hidden": "true",
+                });
+                hit.append(svg("title", {}, title));
+                hit.addEventListener("pointerenter", (event) => {
+                  if (event.pointerType === "mouse") highlightPoint(i);
+                });
+                hit.addEventListener("click", () => selectPoint(i));
+                hitAreas.push(hit);
+              }
             });
           }
+          root.append(...hitAreas);
+          if (settings.inspectPoint)
+            root.addEventListener("pointerleave", () =>
+              highlightPoint(selectedIndex),
+            );
           node.replaceChildren(root);
+          return selectPoint;
         }
         function dateRange(month) {
           const [yr, m] = month.split("-").map(Number);
@@ -1846,7 +2302,19 @@
               : "从月初累计 · 空缺日期保留";
           const history = fillHistory(record),
             target = metric(record, "target");
-          lineChart(
+          const pointSelect = $("aud-point-select");
+          const inspect = (point, index) => {
+            pointSelect.value = String(index);
+            const reading = el("div", null, "audience-reading-line");
+            reading.append(
+              el("strong", formatQuality.format(point.value)),
+              el("span", `${fullDate(point.date)} · ${historyPeriod(point)}`),
+            );
+            $("aud-point-reading").replaceChildren(reading);
+            const source = historySource(point);
+            if (source) $("aud-point-reading").append(el("small", source));
+          };
+          const selectPoint = lineChart(
             $("aud-chart"),
             history,
             [{ key: "value", name: "6h 平均场观", color: "#2159d6" }],
@@ -1854,6 +2322,8 @@
               empty: chartMessage("aud", record),
               label: "6h 平均场观历史折线图",
               formatValue: (value) => formatQuality.format(value),
+              pointLabels: state.aud === "monthly" ? "all" : "sample",
+              inspectPoint: inspect,
               xLabel: (p) =>
                 state.aud === "monthly"
                   ? p.month?.slice(2).replace("-", "/") || shortDate(p.date)
@@ -1861,6 +2331,23 @@
               target,
             },
           );
+          const pointOptions = history.flatMap((point, index) =>
+            Number.isFinite(point.value)
+              ? [
+                  [
+                    String(index),
+                    `${fullDate(point.date)} · ${formatQuality.format(point.value)}`,
+                  ],
+                ]
+              : [],
+          );
+          $("aud-inspector").hidden = !pointOptions.length;
+          if (pointOptions.length) {
+            const latest = pointOptions.at(-1)[0];
+            selectOptions(pointSelect, pointOptions, latest);
+            pointSelect.onchange = () => selectPoint(Number(pointSelect.value));
+            selectPoint(Number(latest));
+          }
           const audienceCaption =
             state.aud === "daily"
               ? history.some((p) => p.legacy)
@@ -1959,6 +2446,223 @@
                 )
             : visiblePeople().map(projectSite).filter(Boolean);
         }
+        const comparisonMetrics = [
+          ...metricDefinitions,
+          ...serviceDefinitions,
+        ].filter(
+          ({ key }) => !["targetGap", "perCapita26", "perCapita"].includes(key),
+        );
+        const comparison = {
+          scope: "group",
+          metric: "adjustments",
+          selected: null,
+        };
+
+        function comparisonScopes() {
+          const people = (
+            state.role === "person" ? personOptions() : filteredPeople()
+          )
+            .map(personAtSite)
+            .filter(Boolean);
+          const choices = [{ key: "person", name: "调试师", records: people }];
+          if (state.role === "director" && state.group === "all") {
+            choices.unshift(
+              {
+                key: "group",
+                name: "总监组",
+                records: visibleGroups().map(projectSite).filter(Boolean),
+              },
+              {
+                key: "team",
+                name: "小队",
+                records: visibleTeams().map(projectSite).filter(Boolean),
+              },
+              {
+                key: "site",
+                name: "场地",
+                records:
+                  state.site === "all"
+                    ? records().filter((record) => record.scope === "site")
+                    : [],
+              },
+            );
+          }
+          return choices.filter((choice) => choice.records.length);
+        }
+
+        function comparisonValue(value, { kind, key }) {
+          if (value === null) return "—";
+          if (kind === "quality") return formatQuality.format(value);
+          if (kind === "ratio") return formatRatio.format(value);
+          if (kind === "percent") return percentage(value);
+          const unit =
+            kind === "integer" ? " 次" : key === "dailyAverage" ? " 次/天" : "";
+          return number(value) + unit;
+        }
+
+        function renderComparison() {
+          const choices = comparisonScopes();
+          const scope =
+            choices.find((choice) => choice.key === comparison.scope) ??
+            choices[0];
+          $("comparison-panel").hidden = !scope;
+          if (!scope) return;
+
+          const available = comparisonMetrics.filter(({ key }) =>
+            scope.records.some((record) => derivedMetric(record, key) !== null),
+          );
+          const definition =
+            available.find(({ key }) => key === comparison.metric) ??
+            available[0];
+          $("comparison-scope-field").hidden = choices.length < 2;
+          selectOptions(
+            $("comparison-scope"),
+            choices.map(({ key, name }) => [key, name]),
+            scope.key,
+          );
+          selectOptions(
+            $("comparison-metric"),
+            comparisonMetrics.map(({ key, name }) => [key, name]),
+            definition?.key,
+          );
+          for (const option of $("comparison-metric").options) {
+            option.disabled = !available.some(
+              ({ key }) => key === option.value,
+            );
+          }
+          $("comparison-metric").disabled = !definition;
+
+          const bars = $("comparison-bars");
+          const detail = $("comparison-value");
+          const open = $("comparison-open");
+          const caption = $("comparison-caption");
+          caption.textContent = `${scope.name} · ${monthData().label || monthData().month}`;
+          open.hidden = !definition;
+          open.onclick = null;
+          bars.onpointerleave = null;
+          if (!definition) {
+            detail.textContent = "当前范围暂无可对比的数据";
+            bars.replaceChildren();
+            return;
+          }
+
+          const { key, kind, name } = definition;
+          const rows = scope.records
+            .map((record) => ({ record, value: derivedMetric(record, key) }))
+            .sort(
+              (a, b) =>
+                (b.value ?? -Infinity) - (a.value ?? -Infinity) ||
+                byName(a.record, b.record),
+            );
+          const max = Math.max(
+            kind === "percent" || kind === "ratio" ? 1 : 0,
+            ...rows.map(({ value }) => value ?? 0),
+          );
+          const context = `${state.month}|${state.site}|${state.role}|${state.group}|${state.team}|${scope.key}|${key}`;
+          let selected =
+            rows.find(
+              ({ record }) =>
+                comparison.selected?.context === context &&
+                comparison.selected.key === record.key,
+            ) ??
+            rows.find(
+              ({ record }) =>
+                state.role === "person" && record.key === state.person,
+            ) ??
+            rows.find(({ value }) => value !== null);
+          const sourceKey = key === "targetAchievement" ? "audience6h" : key;
+          if (
+            rows.some(({ record }) =>
+              record.overallMetrics?.includes(sourceKey),
+            )
+          ) {
+            caption.textContent += " · 部分值为个人全场地数据";
+          }
+
+          function showDetail({ record, value }) {
+            const source =
+              value === null ? "暂无源表结果" : withDate(record, sourceKey);
+            const basis = record.overallMetrics?.includes(sourceKey)
+              ? " · 个人全场地"
+              : "";
+            detail.replaceChildren(
+              el(
+                "strong",
+                `${displayName(record)} · ${name} ${comparisonValue(value, definition)}`,
+              ),
+              el("small", ` · ${source}${basis}`),
+            );
+            open.hidden =
+              state.role === "person" && record.key === state.person;
+            open.onclick = () => {
+              if (state.role === "person" && record.scope === "person") {
+                state.person = record.key;
+                render();
+                $("page-title").scrollIntoView({ block: "nearest" });
+              } else {
+                openRecord(record);
+              }
+            };
+          }
+
+          const buttons = rows.map((item) => {
+            const { record, value } = item;
+            const button = makeButton(null, () => {
+              selected = item;
+              comparison.selected = { context, key: record.key };
+              for (const row of bars.children)
+                row.setAttribute("aria-pressed", String(row === button));
+              showDetail(item);
+            });
+            button.className = "comparison-row";
+            button.setAttribute("aria-pressed", String(item === selected));
+            button.addEventListener("pointerenter", (event) => {
+              if (event.pointerType !== "touch") showDetail(item);
+            });
+            button.addEventListener("focus", () => showDetail(item));
+            const track = el(
+              "span",
+              null,
+              value === null
+                ? "comparison-track comparison-missing"
+                : "comparison-track",
+            );
+            track.setAttribute("aria-hidden", "true");
+            if (value !== null) {
+              const fill = el(
+                "span",
+                null,
+                value === 0 ? "comparison-fill zero" : "comparison-fill",
+              );
+              if (value > 0 && max > 0)
+                fill.style.width = `${(value / max) * 100}%`;
+              track.append(fill);
+            }
+            button.append(
+              el("span", displayName(record)),
+              track,
+              el(
+                "span",
+                comparisonValue(value, definition),
+                "comparison-value",
+              ),
+            );
+            return button;
+          });
+          bars.replaceChildren(...buttons);
+          showDetail(selected);
+          bars.onpointerleave = () => showDetail(selected);
+        }
+
+        $("comparison-scope").addEventListener("change", (event) => {
+          comparison.scope = event.target.value;
+          renderComparison();
+        });
+        $("comparison-metric").addEventListener("change", (event) => {
+          comparison.metric = event.target.value;
+          renderComparison();
+        });
+
         function dayMetric(record, date) {
           const point = (record.daily ?? []).find((d) => d?.date === date);
           return Number.isFinite(point?.adjustments) ? point.adjustments : null;
@@ -2015,6 +2719,109 @@
               number(derivedMetric(person, "targetGap")),
             ]),
           );
+        }
+        const calendarMetrics = {
+          adjustments: "调试数",
+          appointments: "调试预约数",
+        };
+        let calendarMetric = "adjustments";
+        let calendarDay = "";
+        function renderCalendar(record) {
+          const days = dateRange(monthData().month);
+          const recordsByDate = new Map(
+            (record?.daily ?? []).map((point) => [point.date, point]),
+          );
+          const available = days.filter((day) =>
+            Number.isFinite(recordsByDate.get(day)?.[calendarMetric]),
+          );
+          $("calendar-empty").hidden = available.length > 0;
+          $("calendar-layout").hidden = !available.length;
+          for (const button of $("calendar-switch").querySelectorAll("button"))
+            button.setAttribute(
+              "aria-pressed",
+              String(button.dataset.calendarMetric === calendarMetric),
+            );
+          if (!available.length) return;
+
+          if (!available.includes(calendarDay)) calendarDay = available.at(-1);
+          const maxValue = Math.max(
+            1,
+            ...available.map((day) => recordsByDate.get(day)[calendarMetric]),
+          );
+          const weekdayOffset =
+            (new Date(`${days[0]}T00:00:00Z`).getUTCDay() + 6) % 7;
+          const weekdays = ["一", "二", "三", "四", "五", "六", "日"].map(
+            (weekday) => el("span", `周${weekday}`, "calendar-weekday"),
+          );
+          const leading = Array.from({ length: weekdayOffset }, () => {
+            const blank = el("span");
+            blank.setAttribute("aria-hidden", "true");
+            return blank;
+          });
+          const tiles = days.map((day) => {
+            const value = recordsByDate.get(day)?.[calendarMetric];
+            const label = calendarMetrics[calendarMetric];
+            const cell = makeButton(null, () => chooseCalendarDay(day, record));
+            cell.className = "calendar-day";
+            cell.dataset.calendarDay = day;
+            cell.disabled = !Number.isFinite(value);
+            cell.tabIndex = day === calendarDay ? 0 : -1;
+            cell.dataset.level = String(
+              Math.ceil(((value || 0) * 4) / maxValue),
+            );
+            cell.setAttribute(
+              "aria-label",
+              `${day} ${label} ${cell.disabled ? "暂无数据" : number(value)}`,
+            );
+            cell.setAttribute("aria-pressed", String(day === calendarDay));
+            const dayLabel = el("time", day.slice(-2));
+            dayLabel.dateTime = day;
+            cell.append(dayLabel, el("strong", number(value)));
+            return cell;
+          });
+          $("calendar-grid").replaceChildren(...weekdays, ...leading, ...tiles);
+
+          const point = recordsByDate.get(calendarDay);
+          const totals = el("dl");
+          for (const [key, label] of Object.entries(calendarMetrics)) {
+            const item = el("div");
+            item.append(el("dt", label), el("dd", number(point[key])));
+            totals.append(item);
+          }
+          const parts = [
+            ["regular", "正式"],
+            ["proxy", "代调"],
+            ["lighting", "测光"],
+          ].filter(([key]) => Number.isFinite(point[key]));
+          const detail = $("calendar-detail");
+          detail.replaceChildren(el("h3", calendarDay), totals);
+          const mix = el("div", null, "calendar-mix");
+          mix.setAttribute("aria-hidden", "true");
+          for (const [key] of parts) {
+            if (point[key] <= 0) continue;
+            const segment = el("span");
+            segment.dataset.kind = key;
+            segment.style.flexGrow = String(point[key]);
+            mix.append(segment);
+          }
+          if (mix.children.length) detail.append(mix);
+          if (parts.length)
+            detail.append(
+              el(
+                "p",
+                parts
+                  .map(([key, label]) => `${label} ${number(point[key])}`)
+                  .join(" · "),
+                "calendar-breakdown",
+              ),
+            );
+        }
+        function chooseCalendarDay(day, record) {
+          calendarDay = day;
+          renderCalendar(record);
+          $("calendar-grid")
+            .querySelector(`[data-calendar-day="${day}"]`)
+            ?.focus({ preventScroll: true });
         }
         const namedCoverage = (people) =>
           people.some((person) => person.overallMetrics?.length)
@@ -2293,6 +3100,8 @@
             ...serviceDefinitions.map((d) => card(record, d, false)),
           );
           renderCharts(record);
+          renderCalendar(record);
+          renderComparison();
           renderTables(record);
           const notes = [
             snapshotNote(dataset.builtAt),
@@ -2342,6 +3151,38 @@
         $("scope").addEventListener("change", (event) => {
           state[event.target.dataset.key] = event.target.value;
           render();
+        });
+        $("jump-details").addEventListener("click", () => {
+          const panel = $("staff-panel").hidden
+            ? $("table-panel")
+            : $("staff-panel");
+          panel.tabIndex = -1;
+          panel.focus({ preventScroll: true });
+          panel.scrollIntoView({ block: "start" });
+        });
+        $("calendar-switch").addEventListener("click", (event) => {
+          const button = event.target.closest("button[data-calendar-metric]");
+          if (!button) return;
+          calendarMetric = button.dataset.calendarMetric;
+          renderCalendar(scopeRecord());
+        });
+        $("calendar-grid").addEventListener("keydown", (event) => {
+          const offset = {
+            ArrowLeft: -1,
+            ArrowRight: 1,
+            ArrowUp: -7,
+            ArrowDown: 7,
+          }[event.key];
+          const day = event.target.dataset.calendarDay;
+          if (!offset || !day) return;
+          event.preventDefault();
+          const next = dateRange(monthData().month)[
+            Number(day.slice(-2)) - 1 + offset
+          ];
+          const button =
+            next &&
+            $("calendar-grid").querySelector(`[data-calendar-day="${next}"]`);
+          if (button && !button.disabled) button.click();
         });
         for (const [key, id] of [
           ["flow", "flow-switch"],
