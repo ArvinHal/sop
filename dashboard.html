@@ -73,6 +73,40 @@
         display: grid;
         grid-template-columns: 216px minmax(0, 1fr);
         min-height: 100vh;
+        --scope-ink: #194abb;
+        --scope-accent: #3a69db;
+        --scope-light: #edf2ff;
+        --scope-line: #d1def9;
+        --scope-hero-start: #172952;
+        --scope-hero-middle: #142a5b;
+        --scope-hero-end: #124399;
+      }
+      .shell[data-scope-kind="group"] {
+        --scope-ink: #644294;
+        --scope-accent: #8256b6;
+        --scope-light: #f3edfc;
+        --scope-line: #e2d6f5;
+        --scope-hero-start: #2a1e44;
+        --scope-hero-middle: #3d285d;
+        --scope-hero-end: #674394;
+      }
+      .shell[data-scope-kind="team"] {
+        --scope-ink: #14655d;
+        --scope-accent: #278479;
+        --scope-light: #e7f5f1;
+        --scope-line: #c4e7df;
+        --scope-hero-start: #153730;
+        --scope-hero-middle: #184a44;
+        --scope-hero-end: #1c7065;
+      }
+      .shell[data-scope-kind="person"] {
+        --scope-ink: #913f29;
+        --scope-accent: #b96346;
+        --scope-light: #fdf0e9;
+        --scope-line: #f0d9ca;
+        --scope-hero-start: #3e2427;
+        --scope-hero-middle: #552e2c;
+        --scope-hero-end: #87482e;
       }
       .rail {
         background: var(--navy);
@@ -138,8 +172,8 @@
       }
       .rail nav button[aria-current="page"] {
         color: #fff;
-        background: #24427c;
-        border-color: #3d5f9b;
+        background: var(--scope-hero-middle);
+        border-color: var(--scope-accent);
         font-weight: 700;
       }
       .rail nav svg {
@@ -257,12 +291,22 @@
         background: #fff2ee;
         color: #82392c;
       }
+      .toast input[readonly] {
+        display: block;
+        width: 100%;
+        margin-top: 6px;
+        padding: 7px 8px;
+        border: 1px solid #a7badf;
+        border-radius: 5px;
+        color: var(--ink);
+        background: var(--white);
+      }
       .hero {
         background: linear-gradient(
           115deg,
-          #172952 0%,
-          #142a5b 63%,
-          #124399 100%
+          var(--scope-hero-start) 0%,
+          var(--scope-hero-middle) 63%,
+          var(--scope-hero-end) 100%
         );
         color: #fff;
         position: relative;
@@ -296,6 +340,49 @@
       .hero > div {
         position: relative;
         z-index: 1;
+      }
+      .scope-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 9px;
+        padding: 4px 9px;
+        border-radius: 6px;
+        background: var(--scope-light);
+        color: var(--scope-ink);
+        font-size: 12px;
+        font-weight: 750;
+      }
+      .scope-tag::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        background: currentColor;
+        border-radius: 2px;
+      }
+      .shell[data-scope-kind="group"] .scope-tag::before {
+        transform: rotate(45deg);
+      }
+      .shell[data-scope-kind="person"] .scope-tag::before {
+        border-radius: 50%;
+      }
+      .hero .scope-affiliations {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .scope-affiliations:empty {
+        display: none;
+      }
+      .scope-affiliations span {
+        border: 1px solid #ffffff55;
+        background: #ffffff12;
+        color: #fff;
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        line-height: 1.45;
       }
       .hero h1 {
         font-size: clamp(27px, 3.3vw, 44px);
@@ -380,6 +467,32 @@
         color: #1549b5;
         font-weight: 750;
       }
+      .site-tabs button[data-site] {
+        --site-dot: #6a7d9f;
+      }
+      .site-tabs button[data-site="现厂"] {
+        --site-dot: #3970bf;
+      }
+      .site-tabs button[data-site="松江"] {
+        --site-dot: #498064;
+      }
+      .site-tabs button[data-site="无锡"] {
+        --site-dot: #aa6632;
+      }
+      .site-tabs button[data-site]::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin: 0 5px 2px 0;
+        border-radius: 50%;
+        background: var(--site-dot);
+      }
+      .site-tabs button[aria-pressed="true"] {
+        background: var(--scope-light);
+        border-color: var(--scope-line);
+        color: var(--scope-ink);
+      }
       .site-tabs button:hover,
       .segments button:hover {
         border-color: #c9d7ed;
@@ -397,6 +510,16 @@
         border-radius: 7px;
         padding: 6px 28px 6px 8px;
         max-width: 235px;
+      }
+      #scope-field {
+        min-width: 0;
+      }
+      #scope-field select {
+        background: var(--scope-light);
+        border-color: var(--scope-line);
+        color: var(--scope-ink);
+        min-width: 0;
+        font-weight: 650;
       }
       .field[hidden] {
         display: none;
@@ -438,7 +561,7 @@
         min-width: 0;
       }
       .metric-card.primary {
-        border-top: 3px solid #3870eb;
+        border-top: 3px solid var(--scope-accent);
         padding-top: 12px;
       }
       .metric-card strong {
@@ -531,6 +654,142 @@
       .chart svg circle {
         stroke: #fff;
         stroke-width: 1.5;
+      }
+      .monthly-overview {
+        margin-top: 17px;
+      }
+      .monthly-demo-toggle {
+        align-self: center;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--muted);
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .monthly-demo-toggle input {
+        accent-color: var(--scope-accent, #2159d6);
+        width: 15px;
+        height: 15px;
+      }
+      .monthly-overview-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        color: var(--muted);
+        font-size: 12px;
+        margin: 10px 0 12px;
+      }
+      .monthly-overview-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .monthly-overview-legend i {
+        width: 12px;
+        height: 9px;
+        border-radius: 2px;
+        background: var(--scope-accent, #2159d6);
+      }
+      .monthly-overview-legend .partial i,
+      .monthly-bar[data-kind="partial"] .monthly-bar-fill {
+        background: #9abcf6;
+        border: 1px solid #6889b9;
+      }
+      .monthly-overview-legend .demo i,
+      .monthly-bar[data-kind="demo"] .monthly-bar-fill {
+        background: repeating-linear-gradient(135deg, #e9edf3 0 4px, #f8fafc 4px 8px);
+        border: 1px dashed #8b9bb2;
+      }
+      .monthly-overview-plot {
+        overflow-x: auto;
+        scroll-padding-inline: 2px;
+        padding: 2px 2px 9px;
+        scrollbar-width: thin;
+      }
+      .monthly-overview-row + .monthly-overview-row {
+        margin-top: 13px;
+      }
+      .monthly-overview-row h3 {
+        margin: 0 0 7px;
+        color: var(--ink);
+        font-size: 13px;
+      }
+      .monthly-overview-bars {
+        display: grid;
+        grid-template-columns: repeat(var(--monthly-columns), minmax(76px, 1fr));
+        min-width: calc(var(--monthly-columns) * 76px);
+      }
+      .monthly-bar {
+        appearance: none;
+        display: grid;
+        grid-template-rows: 21px 74px 20px 20px;
+        padding: 4px 2px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--ink);
+        text-align: center;
+        font: inherit;
+        cursor: pointer;
+      }
+      .monthly-bar:hover,
+      .monthly-bar[aria-pressed="true"] {
+        background: var(--scope-light, #f0f5fd);
+        border-color: var(--scope-accent, #2159d6);
+      }
+      .monthly-bar:focus-visible {
+        outline-offset: -3px;
+      }
+      .monthly-bar strong {
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .monthly-bar-track {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        margin-inline: 5px;
+        border-bottom: 1px solid var(--line);
+      }
+      .monthly-bar-fill {
+        display: block;
+        width: 50%;
+        height: max(2px, var(--monthly-bar-height));
+        border-radius: 4px 4px 0 0;
+        background: var(--scope-accent, #2159d6);
+      }
+      .monthly-overview-row[data-metric="audience6h"]
+        .monthly-bar[data-kind="actual"] .monthly-bar-fill {
+        opacity: 0.68;
+      }
+      .monthly-bar time,
+      .monthly-bar small {
+        align-self: end;
+        font-size: 11px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .monthly-bar[data-kind="demo"] strong {
+        color: #52637e;
+      }
+      .monthly-overview-reading {
+        background: #f5f8fc;
+        border-radius: 8px;
+        padding: 9px 10px;
+        display: flex;
+        align-items: baseline;
+        gap: 6px 14px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+      .monthly-overview-reading strong {
+        color: var(--ink);
+      }
+      .monthly-overview-reading[hidden] {
+        display: none;
       }
       .work-calendar {
         margin-top: 14px;
@@ -882,21 +1141,24 @@
       .chart-source .table-area {
         margin-top: 8px;
       }
+      #flow-chart,
       #aud-chart {
         overflow-x: auto;
         overscroll-behavior-inline: contain;
       }
-      #aud-chart svg[data-value-labels="all"] {
-        min-width: var(--audience-min-width);
+      .chart svg[data-value-labels="all"] {
+        min-width: var(--trend-min-width);
+        max-height: 250px;
       }
-      #aud-chart .audience-point-label {
-        fill: #193f92;
+      .chart svg .trend-point-label {
+        fill: var(--trend-label-color, #193f92);
         font-size: 12px;
         font-weight: 750;
         paint-order: stroke;
         stroke: #fff;
         stroke-width: 3px;
         stroke-linejoin: round;
+        pointer-events: none;
       }
       #aud-chart .audience-hit {
         cursor: pointer;
@@ -1232,6 +1494,8 @@
                 >查看明细</button
               ><button class="quiet" type="button" id="restore" hidden
                 >返回公开数据</button
+              ><button class="quiet" type="button" id="share-view"
+                >复制当前视图链接</button
               ><button
                 class="file-button"
                 type="button"
@@ -1258,8 +1522,10 @@
           <div id="status" class="toast" role="status" aria-live="polite"></div>
           <section class="hero" aria-labelledby="page-title"
             ><div
+              ><span class="scope-tag" id="scope-tag">部门总览</span
               ><h1 id="page-title">调试部工作概览</h1
               ><p id="hero-description">调试工作量、服务效果与历史场观</p
+              ><div class="scope-affiliations" id="scope-affiliations"></div
               ><div class="hero-meta" id="hero-meta"></div></div
             ><div
               ><label for="month" class="month-label">统计月份</label
@@ -1281,6 +1547,25 @@
               ><h2 id="work-title">工作量</h2><p id="work-caption"></p></div
             ><div class="metric-grid" id="work-cards"></div
           ></section>
+          <section class="panel monthly-overview" aria-labelledby="monthly-overview-title">
+            <div class="panel-head">
+              <div>
+                <h2 id="monthly-overview-title">月度总览</h2>
+                <p id="monthly-overview-caption">按整月汇总，未结月显示截至实际统计日的累计值。</p>
+              </div>
+              <label class="monthly-demo-toggle">
+                <input type="checkbox" id="monthly-overview-demo" checked />
+                显示示意值
+              </label>
+            </div>
+            <div class="monthly-overview-legend">
+              <span><i aria-hidden="true"></i>已结月实绩</span>
+              <span class="partial"><i aria-hidden="true"></i>未结月实绩</span>
+              <span class="demo"><i aria-hidden="true"></i>缺数示意（虚拟值）</span>
+            </div>
+            <div id="monthly-overview-plot" class="monthly-overview-plot"></div>
+            <div id="monthly-overview-reading" class="monthly-overview-reading" aria-live="polite" hidden></div>
+          </section>
           <div class="charts">
             <section class="panel" aria-labelledby="flow-chart-title"
               ><div class="panel-head"
@@ -1608,6 +1893,51 @@
               : "组员看板"
             : ROLE_NAMES[role];
         }
+        function applySharedView() {
+          const params = new URLSearchParams(window.location.search);
+          const month = params.get("month");
+          const site = params.get("site");
+          const role = params.get("view");
+          if (dataset.months.some((record) => record.month === month))
+            state.month = month;
+          if (SITE_NAMES.includes(site)) state.site = site;
+          if (["director", "captain", "person"].includes(role)) state.role = role;
+          if (role === "person" && params.get("entry") === "captain")
+            state.personEntry = "captain";
+          for (const key of ["group", "team", "person"]) {
+            const selection = params.get(key);
+            if (lookup(key, selection)) state[key] = selection;
+          }
+        }
+        async function shareView() {
+          if (dataset !== publicData) return;
+          const url = new URL("https://arvinhal.github.io/sop/dashboard.html");
+          const params = url.searchParams;
+          params.set("month", state.month);
+          if (state.site !== "all") params.set("site", state.site);
+          params.set("view", state.role);
+          const entry = state.role === "person" ? state.personEntry : state.role;
+          const parentKey = entry === "captain" ? "team" : "group";
+          if (state[parentKey] !== "all") params.set(parentKey, state[parentKey]);
+          if (state.role === "person") {
+            params.set("entry", entry);
+            if (state.person !== "all") params.set("person", state.person);
+          }
+          const status = $("status");
+          status.className = "toast";
+          try {
+            await navigator.clipboard.writeText(url.href);
+            status.textContent = "已复制当前视图链接。";
+          } catch {
+            const input = el("input");
+            input.readOnly = true;
+            input.value = url.href;
+            input.setAttribute("aria-label", "当前视图链接");
+            status.replaceChildren("请选择下方链接并复制。", input);
+            input.focus();
+            input.select();
+          }
+        }
         function detector(record) {
           return (
             exactText(record?.site) ||
@@ -1793,15 +2123,15 @@
           render();
           $("page-title").scrollIntoView({ block: "nearest" });
         }
-        function cutoff(metric) {
-          const c = monthData().cutoffs ?? {};
+        function cutoff(metric, month = monthData()) {
+          const c = month.cutoffs ?? {};
           return exactText(c[metric]);
         }
         function metric(record, key) {
           const v = record?.metrics?.[key];
           return Number.isFinite(v) ? v : null;
         }
-        function recordDate(record, key) {
+        function recordDate(record, key, month = monthData()) {
           const specific =
             record?.cutoffs?.[key] ??
             record?.asOf?.[key] ??
@@ -1809,8 +2139,8 @@
           const site =
             state.site === "all"
               ? ""
-              : monthData().siteCutoffs?.[state.site]?.[key];
-          return exactText(specific) || exactText(site) || cutoff(key);
+              : month.siteCutoffs?.[state.site]?.[key];
+          return exactText(specific) || exactText(site) || cutoff(key, month);
         }
         const withDate = (record, key) =>
           recordDate(record, key)
@@ -1923,18 +2253,17 @@
             series.map((s) => p[s.key]).filter(Number.isFinite),
           );
           if (!values.length) {
+            node.removeAttribute("tabindex");
             empty(node, settings.empty);
             return;
           }
-          const showAllLabels = settings.pointLabels === "all";
-          const width = showAllLabels
-              ? Math.max(542, 88 + 70 * (points.length - 1))
-              : 542,
-            height = 216,
+          const dateSpacing = series.length > 1 ? 53 : 68;
+          const width = Math.max(330, 96 + dateSpacing * (points.length - 1)),
+            height = 215,
             left = 53,
-            top = settings.pointLabels ? 31 : 16,
-            right = settings.pointLabels ? 35 : 19,
-            bottom = 31;
+            top = 30,
+            right = 43,
+            bottom = 43;
           const bodyW = width - left - right,
             bodyH = height - top - bottom;
           const max = Math.max(1, ...values, settings.target ?? 0);
@@ -1949,16 +2278,12 @@
             viewBox: `0 0 ${width} ${height}`,
             role: "img",
             "aria-label": settings.label,
+            "data-value-labels": "all",
           });
-          if (showAllLabels) {
-            root.dataset.valueLabels = "all";
-            root.style.setProperty(
-              "--audience-min-width",
-              `${72 + 48 * points.length}px`,
-            );
-          }
+          root.style.setProperty("--trend-min-width", `${width}px`);
           const dotByIndex = new Map();
           const hitAreas = [];
+          const valueLabels = [];
           let activeDot, selectedIndex;
           function highlightPoint(index) {
             const dot = dotByIndex.get(index);
@@ -1968,9 +2293,16 @@
             activeDot = dot;
             settings.inspectPoint(points[index], index);
           }
-          function selectPoint(index) {
+          function selectPoint(index, reveal = false) {
             selectedIndex = index;
             highlightPoint(index);
+            const dot = dotByIndex.get(index);
+            if (reveal && dot && node.scrollWidth > node.clientWidth) {
+              const offset =
+                dot.getBoundingClientRect().left - node.getBoundingClientRect().left;
+              if (offset < 20 || offset > node.clientWidth - 20)
+                node.scrollLeft += offset - node.clientWidth / 2;
+            }
           }
           for (let n = 0; n <= 4; n++) {
             const val = step * n,
@@ -2002,31 +2334,20 @@
                 "stroke-width": 1.3,
               }),
             );
-          let labelIndices;
-          if (showAllLabels || points.length <= 5)
-            labelIndices = points.map((_, i) => i);
-          else
-            labelIndices = [0, 1, 2, 3, 4].map((i) =>
-              Math.round((i * (points.length - 1)) / 4),
-            );
-          for (const i of labelIndices)
+          points.forEach((point, index) => {
             root.append(
               svg(
                 "text",
                 {
-                  x: x(i),
+                  x: x(index),
                   y: height - 8,
-                  "text-anchor":
-                    i === 0
-                      ? "start"
-                      : i === points.length - 1
-                        ? "end"
-                        : "middle",
+                  "text-anchor": "middle",
                 },
-                settings.xLabel(points[i]),
+                settings.xLabel(point),
               ),
             );
-          for (const s of series) {
+          });
+          for (const [seriesIndex, s] of series.entries()) {
             let path = "",
               connected = false;
             const visible = [];
@@ -2050,14 +2371,7 @@
                 "stroke-linecap": "round",
               }),
             );
-            const labelSlots = new Set(
-              showAllLabels || visible.length <= 5
-                ? visible.map((_, i) => i)
-                : [0, 1, 2, 3, 4].map((i) =>
-                    Math.round((i * (visible.length - 1)) / 4),
-                  ),
-            );
-            visible.forEach(([p, i, v], slot) => {
+            visible.forEach(([p, i, v]) => {
               const formatted = settings.formatValue
                 ? settings.formatValue(v)
                 : number(v);
@@ -2075,19 +2389,23 @@
                 .join("\n");
               dot.append(svg("title", {}, title));
               root.append(dot);
-              if (settings.pointLabels && labelSlots.has(slot))
-                root.append(
-                  svg(
-                    "text",
-                    {
-                      class: "audience-point-label",
-                      x: x(i),
-                      y: y(v) - 9,
-                      "text-anchor": "middle",
-                    },
-                    formatted,
-                  ),
-                );
+              const otherValue = p[series[1 - seriesIndex]?.key];
+              const labelBelow =
+                Number.isFinite(otherValue) &&
+                (v < otherValue || (v === otherValue && seriesIndex > 0));
+              const label = svg(
+                "text",
+                {
+                  class: `trend-point-label${settings.inspectPoint ? " audience-point-label" : ""}`,
+                  x: x(i),
+                  y: y(v) + (labelBelow ? 16 : -10),
+                  "text-anchor": "middle",
+                },
+                formatted,
+              );
+              if (s.labelColor)
+                label.style.setProperty("--trend-label-color", s.labelColor);
+              valueLabels.push(label);
               if (settings.inspectPoint) {
                 dotByIndex.set(i, dot);
                 const halfSlot = bodyW / Math.max(points.length - 1, 1) / 2;
@@ -2112,12 +2430,13 @@
               }
             });
           }
-          root.append(...hitAreas);
+          root.append(...valueLabels, ...hitAreas);
           if (settings.inspectPoint)
             root.addEventListener("pointerleave", () =>
               highlightPoint(selectedIndex),
             );
           node.replaceChildren(root);
+          node.tabIndex = 0;
           return selectPoint;
         }
         function dateRange(month) {
@@ -2202,7 +2521,7 @@
             }[point.period_type] ?? "场观快照"
           );
         }
-        function fillHistory(record) {
+        function fillHistory(record, period = state.aud) {
           if (!record) return [];
           const available = (dataset.history ?? []).filter(
             (h) =>
@@ -2210,7 +2529,7 @@
               (h.key === record.key || h.name === record.name) &&
               Number.isFinite(h.value) &&
               typeof h.date === "string" &&
-              (state.aud === "daily"
+              (period === "daily"
                 ? isDaily(h) &&
                   (h.month ?? h.date.slice(0, 7)) === monthData().month
                 : isMonthly(h)),
@@ -2226,7 +2545,7 @@
           const candidates = overall
             ? available.filter((h) => !h.site)
             : specific;
-          if (state.aud === "daily") {
+          if (period === "daily") {
             const month = monthData().month;
             const canonical = candidates.filter(
               (h) => h.period_type !== "legacy_daily_comparison",
@@ -2271,6 +2590,163 @@
             .sort(([a], [b]) => a.localeCompare(b))
             .map(([month, h]) => ({ ...h, month, overall }));
         }
+        const monthlyOverviewMetrics = [
+          {
+            key: "adjustments",
+            title: "月度调试总量",
+            format: (value) => `${number(value)} 次`,
+            demo: { department: 1680, site: 510, group: 370, team: 235, person: 52 },
+          },
+          {
+            key: "audience6h",
+            title: "月度 6h 平均场观",
+            format: (value) => formatQuality.format(value),
+            demo: { department: 3550, site: 3420, group: 3290, team: 3150, person: 3040 },
+          },
+        ];
+
+        function overviewMonthRecord(month, identity) {
+          const record = month?.scopeRecords.find(
+            (r) => r.scope === identity.scope && r.key === identity.key,
+          );
+          return identity.scope === "person"
+            ? personAtSite(record)
+            : projectSite(record);
+        }
+
+        function overviewPoint(month, def, identity, monthDataByKey, history) {
+          const dataMonth = monthDataByKey.get(month);
+          const record = overviewMonthRecord(dataMonth, identity);
+          const source = def.key === "audience6h" ? history.get(month) : null;
+          const value = source?.value ?? metric(record, def.key);
+          if (value === null) {
+            const monthFactors = [
+              0.92, 1.06, 0.96, 1.12, 1.04, 0.89, 0.98, 1.08, 1.02, 0.95,
+              1.15, 0.91,
+            ];
+            const factor = monthFactors[Number(month.slice(5)) - 1];
+            return {
+              value: Math.round(def.demo[identity.scope] * factor),
+              kind: "demo",
+              label: "示意",
+              detail: "缺少当前范围的月度实绩，图上数值为虚拟示意。",
+            };
+          }
+          const date = source?.date ?? recordDate(record, def.key, dataMonth);
+          const partial =
+            source?.period_type === "month_open" ||
+            (date?.startsWith(month) && date < dateRange(month).at(-1));
+          const overall = source
+            ? source.overall
+            : record?.overallMetrics?.includes(def.key);
+          return {
+            value,
+            kind: partial ? "partial" : "actual",
+            label: partial ? "未结月" : "实绩",
+            detail: [
+              date && `截至 ${date}`,
+              overall && "个人全场地",
+              source && historySource(source),
+            ].filter(Boolean).join(" · "),
+          };
+        }
+
+        function renderMonthlyOverview(record) {
+          const plot = $("monthly-overview-plot");
+          const reading = $("monthly-overview-reading");
+          reading.hidden = true;
+          const caption =
+            "按月汇总。点选月份可查看统计截止日和已核对的场观来源。";
+          $("monthly-overview-caption").textContent = record
+            ? `${displayName(record)} · ${caption}`
+            : caption;
+          if (!record) {
+            empty(plot, "当前筛选范围暂无月度记录。");
+            return;
+          }
+          const history = new Map(
+            fillHistory(record, "monthly").map((point) => [point.month, point]),
+          );
+          const monthDataByKey = new Map(dataset.months.map((m) => [m.month, m]));
+          const months = [...new Set([...monthDataByKey.keys(), ...history.keys()])]
+            .filter((month) => /^\d{4}-(0[1-9]|1[0-2])$/.test(month))
+            .sort();
+          const showDemo = $("monthly-overview-demo").checked;
+          const rows = monthlyOverviewMetrics.map((def) => ({
+            def,
+            points: months.map((month) =>
+              overviewPoint(month, def, record, monthDataByKey, history),
+            ),
+          }));
+          function selectMonth(index) {
+            const month = months[index];
+            let firstSelected;
+            plot.querySelectorAll(".monthly-bar").forEach((button) => {
+              const selected = button.dataset.month === month;
+              button.setAttribute("aria-pressed", String(selected));
+              if (selected) firstSelected ??= button;
+            });
+            if (firstSelected) {
+              const plotBounds = plot.getBoundingClientRect();
+              const buttonBounds = firstSelected.getBoundingClientRect();
+              if (buttonBounds.right > plotBounds.right) {
+                plot.scrollLeft += buttonBounds.right - plotBounds.right + 2;
+              } else if (buttonBounds.left < plotBounds.left) {
+                plot.scrollLeft += buttonBounds.left - plotBounds.left - 2;
+              }
+            }
+            reading.replaceChildren(el("strong", month));
+            for (const { def, points } of rows) {
+              const point = points[index];
+              const count = point.kind === "demo" && !showDemo
+                ? "缺少月度实绩"
+                : `${def.format(point.value)} · ${point.label}`;
+              reading.append(
+                el(
+                  "span",
+                  [def.title, count, point.kind === "demo" && !showDemo ? "" : point.detail]
+                    .filter(Boolean)
+                    .join(" · "),
+                ),
+              );
+            }
+            reading.hidden = false;
+          }
+          plot.style.setProperty("--monthly-columns", months.length);
+          plot.replaceChildren(...rows.map(({ def, points }) => {
+            const visible = points.filter((point) => showDemo || point.kind !== "demo");
+            const maximum = Math.max(1, ...visible.map((point) => point.value));
+            const row = el("div", null, "monthly-overview-row");
+            row.dataset.metric = def.key;
+            const bars = el("div", null, "monthly-overview-bars");
+            bars.append(...points.map((point, index) => {
+              const month = months[index];
+              const hasValue = point.kind !== "demo" || showDemo;
+              const value = hasValue ? def.format(point.value) : "—";
+              const description = hasValue ? point.label : "缺数";
+              const button = makeButton(null, () => selectMonth(index));
+              button.className = "monthly-bar";
+              button.dataset.month = month;
+              button.dataset.kind = hasValue ? point.kind : "missing";
+              button.setAttribute("aria-label", `${month} ${def.title} ${value} ${description}`);
+              const track = el("span", null, "monthly-bar-track");
+              if (hasValue) {
+                const bar = el("i", null, "monthly-bar-fill");
+                bar.setAttribute("aria-hidden", "true");
+                bar.style.setProperty("--monthly-bar-height", `${(point.value / maximum) * 100}%`);
+                track.append(bar);
+              }
+              const time = el("time", month.slice(2).replace("-", "/"));
+              time.dateTime = month;
+              button.append(el("strong", value), track, time, el("small", description));
+              return button;
+            }));
+            row.append(el("h3", def.title), bars);
+            return row;
+          }));
+          selectMonth(Math.max(0, months.indexOf(monthData().month)));
+        }
+
         function renderCharts(record) {
           const points = fillWorkPoints(record);
           lineChart(
@@ -2278,7 +2754,12 @@
             points,
             [
               { key: "adjustments", name: "调试数", color: "#2159d6" },
-              { key: "appointments", name: "调试预约数", color: "#c58b21" },
+              {
+                key: "appointments",
+                name: "调试预约数",
+                color: "#c58b21",
+                labelColor: "#845716",
+              },
             ],
             {
               empty: chartMessage("flow", record),
@@ -2297,9 +2778,10 @@
               ? ` · 峰值 ${shortDate(peak.date)}（${number(peak.adjustments)} 次）`
               : "";
           $("flow-subtitle").textContent =
-            state.flow === "daily"
+            (state.flow === "daily"
               ? `按业务日期 · 逐日记录${peakNote}`
-              : "从月初累计 · 空缺日期保留";
+              : "从月初累计 · 空缺日期保留") +
+            (points.length > 10 ? " · 可横向滑动" : "");
           const history = fillHistory(record),
             target = metric(record, "target");
           const pointSelect = $("aud-point-select");
@@ -2322,7 +2804,6 @@
               empty: chartMessage("aud", record),
               label: "6h 平均场观历史折线图",
               formatValue: (value) => formatQuality.format(value),
-              pointLabels: state.aud === "monthly" ? "all" : "sample",
               inspectPoint: inspect,
               xLabel: (p) =>
                 state.aud === "monthly"
@@ -2345,7 +2826,7 @@
           if (pointOptions.length) {
             const latest = pointOptions.at(-1)[0];
             selectOptions(pointSelect, pointOptions, latest);
-            pointSelect.onchange = () => selectPoint(Number(pointSelect.value));
+            pointSelect.onchange = () => selectPoint(Number(pointSelect.value), true);
             selectPoint(Number(latest));
           }
           const audienceCaption =
@@ -2354,9 +2835,9 @@
                 ? "源表单日对照值 · 缺日留空"
                 : "截至当日的月累计快照 · 缺日留空"
               : "各月源表结果 · 当月按已核对截止日";
-          $("aud-subtitle").textContent = history.some((p) => p.overall)
-            ? `个人全场地 · ${audienceCaption}`
-            : audienceCaption;
+          $("aud-subtitle").textContent =
+            (history.some((p) => p.overall) ? `个人全场地 · ${audienceCaption}` : audienceCaption) +
+            (history.length > 10 ? " · 可横向滑动" : "");
           const sources = history.filter(historySource);
           $("aud-sources").hidden = !sources.length;
           if (sources.length)
@@ -2990,6 +3471,46 @@
             ? `${values.filter((v) => v >= 1).length} / ${values.length}`
             : null;
         }
+        function renderScopeContext(record) {
+          const kind =
+            state.role === "person"
+              ? "person"
+              : state.role === "captain"
+                ? "team"
+                : state.group !== "all"
+                  ? "group"
+                  : state.site !== "all"
+                    ? "site"
+                    : "department";
+          document.querySelector(".shell").dataset.scopeKind = kind;
+          $("scope-tag").textContent = {
+            department: "部门总览",
+            site: "场地总览",
+            group: "总监组",
+            team: "小队",
+            person: state.personEntry === "captain" ? "队员" : "组员",
+          }[kind];
+
+          const groups = Array.isArray(record?.groups)
+            ? record.groups
+            : [record?.group];
+          const affiliations = [
+            ...groups.filter((group) => exactText(group)),
+            record?.team,
+            kind === "person" && detector(record),
+            kind === "person" && record?.role,
+          ].filter((value) => exactText(value));
+          $("scope-affiliations").replaceChildren(
+            ...[...new Set(affiliations)].map((name) => el("span", name)),
+          );
+          $("hero-description").textContent = {
+            department: "部门工作量、服务效果与历史场观",
+            site: "当前场地的工作量与服务效果",
+            group: "总监组工作量、组员表现与服务效果",
+            team: "小队工作量、队员表现与服务效果",
+            person: "个人工作量与服务效果",
+          }[kind];
+        }
         function render() {
           const m = monthData();
           state.month = m.month;
@@ -3011,6 +3532,7 @@
                 : `${state.site}工作概览`
               : roleLabel(state.role);
           $("page-title").textContent = title;
+          renderScopeContext(selected);
           $("person-nav").textContent = roleLabel("person");
           document.querySelectorAll("[data-role]").forEach((button) => {
             if (button.dataset.role === state.role)
@@ -3032,12 +3554,6 @@
               el("span", "/"),
               el("span", roleLabel(state.role)),
             );
-          $("hero-description").textContent =
-            state.role === "person"
-              ? `${roleLabel("person")} · ${[record?.group, record?.team, detector(record)].filter(Boolean).join(" · ") || "个人工作量与服务效果"}`
-              : state.role === "captain"
-                ? "小队工作量、队员表现与服务效果"
-                : "调试工作量、服务效果与历史场观";
           const currentMode = dataset === publicData ? "公开视图" : "本地导入";
           $("mode").textContent = currentMode;
           $("mobile-mode").textContent = currentMode;
@@ -3046,6 +3562,7 @@
               ? "文件在当前浏览器处理。"
               : "展示当前已发布的数据。";
           $("restore").hidden = dataset === publicData;
+          $("share-view").hidden = dataset !== publicData;
           $("hero-meta").replaceChildren(
             el("span", currentMode, "accent"),
             el(
@@ -3074,6 +3591,7 @@
                   state.group = "all";
                   render();
                 });
+                btn.dataset.site = key;
                 btn.setAttribute("aria-pressed", String(state.site === key));
                 return btn;
               },
@@ -3099,6 +3617,7 @@
           $("service-cards").replaceChildren(
             ...serviceDefinitions.map((d) => card(record, d, false)),
           );
+          renderMonthlyOverview(record);
           renderCharts(record);
           renderCalendar(record);
           renderComparison();
@@ -3139,6 +3658,10 @@
               );
         }
 
+        $("monthly-overview-demo").addEventListener("change", () =>
+          renderMonthlyOverview(scopeRecord()),
+        );
+
         document
           .querySelectorAll("[data-role]")
           .forEach((btn) =>
@@ -3152,6 +3675,7 @@
           state[event.target.dataset.key] = event.target.value;
           render();
         });
+        $("share-view").addEventListener("click", shareView);
         $("jump-details").addEventListener("click", () => {
           const panel = $("staff-panel").hidden
             ? $("table-panel")
@@ -3241,6 +3765,7 @@
             event.target.value = "";
           }
         });
+        applySharedView();
         render();
       })();
     </script>
